@@ -39,6 +39,9 @@
                 <configuration>
                     <reload>automatic</reload>
                     <scanIntervalSeconds>1</scanIntervalSeconds>
+                    <httpConnector>
+                        <port>8888</port>
+                    </httpConnector>
                 </configuration>
             </plugin>
         </plugins>
