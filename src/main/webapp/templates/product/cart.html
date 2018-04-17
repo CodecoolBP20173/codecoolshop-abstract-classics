@@ -52,8 +52,17 @@
                 </td>
                 <td>
                     <h1 th:text="|Quantity: ${item.value}|">
-                        Quantity: ""
+                        Quantity
                     </h1>
+                </td>
+                <td>
+                    Plus
+                </td>
+                <td>
+                    Minus
+                </td>
+                <td th:with="result=${item.value*item.key.getDefaultPrice()}">
+                    <span th:text="${#numbers.formatDecimal(result, 0, 'COMMA', 2, 'POINT')}">10.00</span> USD
                 </td>
 
             </tr>
