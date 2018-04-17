@@ -35,9 +35,19 @@ public class ShopCartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int subTotal = 0;
+        for (Map.Entry<Product,Integer> p: CartItems.cartItems.entrySet()) {
+            Product key = p.getKey();
+            Integer value = p.getValue();
+
+            subTotal += (key.getDefaultPrice()*value);
+        }
+
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("shoppingItems", CartItems.cartItems);
+        context.setVariable("subTotal", subTotal);
         engine.process("product/cart.html", context, resp.getWriter());
 
         // testing context
