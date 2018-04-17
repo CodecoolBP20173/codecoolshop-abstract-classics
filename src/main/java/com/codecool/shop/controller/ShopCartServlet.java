@@ -31,6 +31,9 @@ public class ShopCartServlet extends HttpServlet {
         CartItems.addItem(productDataStore.find(2));
         CartItems.addItem(productDataStore.find(2));
         CartItems.addItem(productDataStore.find(1));
+        CartItems.addItem(productDataStore.find(3));
+        CartItems.addItem(productDataStore.find(3));
+        CartItems.addItem(productDataStore.find(3));
     }
 
     @Override
