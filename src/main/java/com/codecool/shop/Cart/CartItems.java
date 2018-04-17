@@ -4,6 +4,7 @@ import com.codecool.shop.model.Product;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
@@ -19,13 +20,13 @@ public class CartItems {
         increaseItemNumber(product);
     }
 
-    public static void removeItem (Product product) {
+    /*public static void removeItem (Product product) {
         if (cartItemList.contains(product)) {
             cartItemList.remove(product);
             decreaseItemNumber(product);
         }
 
-    }
+    }*/
 
 
     public static void increaseItemNumber(Product product) {
@@ -36,13 +37,15 @@ public class CartItems {
         }
     }
 
-    public static void decreaseItemNumber(Product product) {
+    public static void decreaseItemNumber(Product product, Iterator iterator) {
         if (cartItems.get(product) > 0) {
             cartItems.put(product, cartItems.get(product) -1);
+            cartItemList.remove(product);
         }
 
         if (cartItems.get(product) == 0) {
-            cartItems.remove(product);
+            iterator.remove();
+            cartItemList.remove(product);
         }
     }
 }

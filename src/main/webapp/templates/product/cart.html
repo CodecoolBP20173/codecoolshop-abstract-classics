@@ -69,16 +69,18 @@
                         th:text="${#numbers.formatDecimal(item.value*item.key.getDefaultPrice(), 0, 'COMMA', 2, 'POINT')}"
                     ><strong>$9.98</strong>
                     </td>
-                    <td class="col-md-1">
-                        <button type="button" class="btn btn-success">
-                            <span class="glyphicon glyphicon-plus"></span> Add
-                        </button>
-                    </td>
-                    <td class="col-md-1">
-                        <button type="button" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-minus"></span> Remove
-                        </button>
-                    </td>
+                    <form th:action="'/cart/' + ${item.key.id}" method="post">
+                        <td class="col-md-1">
+                            <button type="submit" name="addRemove" th:value="'add' + ${item.key.id}" class="btn btn-success">
+                                <span class="glyphicon glyphicon-plus"></span> Add
+                            </button>
+                        </td>
+                        <td class="col-md-1">
+                            <button type="submit" name="addRemove" th:value="'remove' + ${item.key.id}" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-minus"></span> Remove
+                            </button>
+                        </td>
+                    </form>
                 </tr>
 
 

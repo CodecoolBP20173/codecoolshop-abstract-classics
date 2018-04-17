@@ -41,12 +41,12 @@ public class Initializer implements ServletContextListener {
 
 
         //For trying out the cartList only
-        CartItems.cartItemList.add(productDataStore.find(1));
+        /*CartItems.cartItemList.add(productDataStore.find(1));
         CartItems.cartItemList.add(productDataStore.find(1));
         CartItems.cartItemList.add(productDataStore.find(2));
         CartItems.cartItemList.add(productDataStore.find(3));
         CartItems.cartItemList.add(productDataStore.find(1));
-        CartItems.cartItemList.add(productDataStore.find(3));
+        CartItems.cartItemList.add(productDataStore.find(3));*/
         //System.out.println(CartItems.cartItemList.get(0).getProductCategory().getName());   //CartItems.cartItemList.get(0).getProductCategory().getName();
     }
 }

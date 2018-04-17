@@ -14,14 +14,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-@WebServlet(urlPatterns = {"/cart"})
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
+
+@WebServlet(urlPatterns = {"/cart/*", "/cart"})
 public class ShopCartServlet extends HttpServlet {
+
+
 
     @Override
     public void init() throws ServletException {
@@ -37,7 +39,21 @@ public class ShopCartServlet extends HttpServlet {
     }
 
     @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String buttonValue = req.getParameter("addRemove");
+        removeAddCart(buttonValue);
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+        context.setVariable("shoppingItems", CartItems.cartItems);
+        resp.sendRedirect("/cart");
+        System.out.println(CartItems.cartItemList.size());
+
+
+    }
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println(CartItems.cartItemList.size());
         int subTotal = 0;
         for (Map.Entry<Product,Integer> p: CartItems.cartItems.entrySet()) {
             Product key = p.getKey();
@@ -102,4 +118,21 @@ for(Map.Entry<String, HashMap> entry : selects.entrySet()) {
                         "</body></html>"
         );*/
     }
+
+    private void removeAddCart(String button) {
+
+
+        Iterator<Map.Entry<Product,Integer>> it = CartItems.cartItems.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Product, Integer> pair = it.next();
+            Product key = pair.getKey();
+            if (button.equals("add" + key.getId())) {
+                CartItems.increaseItemNumber(key);
+            } else if (button.equals("remove" + key.getId())) {
+                CartItems.decreaseItemNumber(key, it);
+            }
+        }
+
+    }
+
 }
