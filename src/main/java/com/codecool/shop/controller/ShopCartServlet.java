@@ -25,10 +25,10 @@ public class ShopCartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("shoppingItems", CartItems.cartItemList);
-        engine.process("product/cart.html", context, resp.getWriter());*/
+        context.setVariable("shoppingItems", CartItems.cartItems);
+        engine.process("product/cart.html", context, resp.getWriter());
 
         // testing context
         /*List<Product> products = new ArrayList<>();
@@ -60,7 +60,7 @@ for(Map.Entry<String, HashMap> entry : selects.entrySet()) {
 }
         * */
 
-        String title = "Cart";
+/*        String title = "Cart";
         String itemsString = "";
         PrintWriter out = resp.getWriter();
         for (Map.Entry<Product,Integer> p: products.entrySet()) {
@@ -81,6 +81,6 @@ for(Map.Entry<String, HashMap> entry : selects.entrySet()) {
                         "<br><br>" +
                         "<font size=\"6\"><b>Sum of Price: " + "SUm" + "</b></font>" +
                         "</body></html>"
-        );
+        );*/
     }
 }
