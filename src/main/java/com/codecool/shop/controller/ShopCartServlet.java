@@ -24,6 +24,16 @@ import java.util.Map;
 public class ShopCartServlet extends HttpServlet {
 
     @Override
+    public void init() throws ServletException {
+        super.init();
+        Map<Product,Integer> products = CartItems.cartItems;
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        CartItems.addItem(productDataStore.find(2));
+        CartItems.addItem(productDataStore.find(2));
+        CartItems.addItem(productDataStore.find(1));
+    }
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -42,11 +52,7 @@ public class ShopCartServlet extends HttpServlet {
         addedItem = productDataStore.find(3);
         products.add(addedItem);*/
 
-        Map<Product,Integer> products = CartItems.cartItems;
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        CartItems.addItem(productDataStore.find(2));
-        CartItems.addItem(productDataStore.find(2));
-        CartItems.addItem(productDataStore.find(1));
+
 
         /*
         * HashMap<String, HashMap> selects = new HashMap<String, HashMap>();

@@ -62,10 +62,12 @@
 
                     </td>
                     <td class="col-md-1" style="text-align: center">
-                        <input type="email" class="form-control" id="quantity" value="2">
+                        <input type="email" class="form-control" id="quantity" th:attr="value=${item.value}">
                     </td>
-                    <td class="col-md-1 text-center"><strong>$4.99</strong></td>
-                    <td class="col-md-1 text-center"><strong>$9.98</strong></td>
+                    <td class="col-md-1 text-center" th:text="${item.key.getDefaultPrice()}"><strong>$4.99</strong></td>
+                    <td class="col-md-1 text-center"
+                        th:text="${#numbers.formatDecimal(item.value*item.key.getDefaultPrice(), 0, 'COMMA', 2, 'POINT')}" ><strong>$9.98</strong>
+                    </td>
                     <td class="col-md-1">
                         <button type="button" class="btn btn-danger">
                             <span class="glyphicon glyphicon-remove"></span> Remove
