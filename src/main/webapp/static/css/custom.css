@@ -69,3 +69,38 @@
 {
     color: black;
 }
+
+/*for prettify look*/
+body {
+    padding: 1em;
+}
+
+/* actual dropdown animation */
+.dropdown .dropdown-menu {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+
+    max-height: 0;
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+    top: 0;
+    padding: 0;
+    border: none;
+    margin: 0;
+    min-width: 0;
+}
+
+
+.dropdown.open .dropdown-menu {
+    max-height: 200px;
+    opacity: 1;
+    position:absolute;
+    float:right;
+    top: 0;
+    left: 200px;
+
+}
