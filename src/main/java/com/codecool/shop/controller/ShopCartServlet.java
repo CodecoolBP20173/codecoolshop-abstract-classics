@@ -21,21 +21,6 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/cart/*", "/cart"})
 public class ShopCartServlet extends HttpServlet {
 
-
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        Map<Product,Integer> products = CartItems.cartItems;
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        CartItems.addItem(productDataStore.find(2));
-        CartItems.addItem(productDataStore.find(2));
-        CartItems.addItem(productDataStore.find(1));
-        CartItems.addItem(productDataStore.find(3));
-        CartItems.addItem(productDataStore.find(3));
-        CartItems.addItem(productDataStore.find(3));
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
