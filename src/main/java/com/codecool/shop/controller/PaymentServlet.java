@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/checkout"})
-public class CheckoutServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/payment"})
+public class PaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -33,7 +33,6 @@ public class CheckoutServlet extends HttpServlet {
         context.setVariable("shoppingItems", CartItems.cartItems);
         context.setVariable("subTotal", subTotal);
 
-
-        engine.process("product/checkout.html", context, resp.getWriter());
+        engine.process("product/payment.html", context, resp.getWriter());
     }
 }
