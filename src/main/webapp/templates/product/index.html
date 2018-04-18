@@ -50,7 +50,8 @@
         <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
                 Select Product Category
-                <span class="caret"></span>
+                <i class="fas fa-angle-right"></i>
+                <i class="fas fa-angle-right"></i>
             </button>
             <table class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                 <tr>
@@ -67,7 +68,8 @@
         <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown">
                 Select Product Supplier
-                <span class="caret"></span>
+                <i class="fas fa-angle-right"></i>
+                <i class="fas fa-angle-right"></i>
             </button>
             <table class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                 <tr>
@@ -80,6 +82,11 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        <a href="/" class="btn btn-default" id="showAllButton" >Select All Products</a>
+    </div>
+    <br>
+    <br>
 
     <div id="products" class="row list-group">
         <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">

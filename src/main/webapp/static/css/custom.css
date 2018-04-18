@@ -101,6 +101,25 @@ body {
     position:absolute;
     float:right;
     top: 0;
-    left: 200px;
+    left: 250px;
+
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.btn.btn-default.dropdown-toggle {
+    width: 200px;
+}
+
+#showAllButton {
+    width: 200px;
+}
+
+#products {
+    border-left: 4px solid rgba(120, 118, 122, 0.74);
+    border-right: 4px solid rgba(120, 118, 122, 0.74);
+    border-bottom: 4px solid rgba(120, 118, 122, 0.74);
 
 }
