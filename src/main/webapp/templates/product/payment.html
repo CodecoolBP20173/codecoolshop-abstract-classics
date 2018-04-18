@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Cool checkout</title>
+
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
+</head>
+
+<body>
+<h1>Payment methods</h1>
+<form class="form-horizontal" action="/">
+
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#coinsCollapse">
+                        Codecoins</a>
+                </h4>
+            </div>
+
+            <!--CodeCoins-->
+            <div id="coinsCollapse" class="panel-collapse collapse in">
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="accountNumber">Account:</label>
+                        <img src="/static/img/coins.png" height="30">
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" id="accountNumber"
+                                   placeholder="Enter your account number"
+                                   required="required">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="codeCoinPwd">Password:</label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" id="codeCoinPwd"
+                                   placeholder="1234"
+                                   required="required">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#ccCardCollapse">
+                        CodeCool card</a>
+                </h4>
+            </div>
+
+            <!--CC card-->
+            <div id="ccCardCollapse" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="ccCardNumber">Account:</label>
+                        <img src="/static/img/visa.png" height="10">
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" id="ccCardNumber"
+                                   placeholder="card number"
+                                   required="required">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="ccCardHolder">Card holder:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="ccCardHolder"
+                                   placeholder="Card holder"
+                                   required="required">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="ccCardExpiry">Card holder:</label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="ccCardExpiry"
+                                   placeholder="Expiry date"
+                                   required="required">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="ccCardExpiry">Card holder:</label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" id="ccCardCode"
+                                   placeholder="1234"
+                                   required="required">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                        Summarizing</a>
+                </h4>
+            </div>
+
+            <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <div class="container">
+                        <h2>Summarizing</h2>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr class="row">
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="row" th:each="item : ${shoppingItems}">
+                                <td th:text="${item.key.name}">Product</td>
+                                <td th:text="${item.value}">Quantity</td>
+                                <td th:text="${#numbers.formatDecimal(item.key.getDefaultPrice(), 0, 'COMMA', 2, 'POINT')}">
+                                    Price
+                                </td>
+                                <td th:text="${#numbers.formatDecimal(item.value*item.key.getDefaultPrice(), 0, 'COMMA', 2, 'POINT')}">
+                                    SubTotal
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"><strong>Total:</strong></td>
+                                <td th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 2, 'POINT')}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Confirm</button>
+        </div>
+    </div>
+
+
+</form>
+
+
+<div th:replace="footer.html :: copy"></div>
+</body>
+</html>
