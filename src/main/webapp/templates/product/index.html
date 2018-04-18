@@ -75,7 +75,8 @@
                         <div class="col-xs-12 col-md-6">
                             <form th:action="${#httpServletRequest.getRequestURI()}" method="post">
                                 <button type="submit" class="btn btn-success" name="add-button" th:value="${prod.id}">Add to cart</button>
-                                <input hidden name="current-uri" th:value="${#httpServletRequest.getRequestURI()} +'?' + ${#httpServletRequest.getQueryString()}">
+                                <input hidden name="current-uri" th:value="${#httpServletRequest.getRequestURI()} +'?' + ${#httpServletRequest.getQueryString()}" th:if="${ #httpServletRequest.getQueryString() != null}">
+                                <input hidden name="current-uri" th:value="${#httpServletRequest.getRequestURI()}" th:if="${#httpServletRequest.getQueryString() eq null}">
                             </form>
                         </div>
                     </div>
