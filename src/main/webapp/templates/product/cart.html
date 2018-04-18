@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Codecool Shop</title>
+
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">Total</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${shoppingItems}">
+                    <td class="col-md-6">
+                        <div class="media thumbnail">
+                            <img class="group list-group-image" src="https://kremmania.hu/UploadedImages/7/alma-300-300.png" th:attr="src='/static/img/product_' + ${item.key.getId()} + '.jpg'" alt="" />
+                            <div class="caption">
+                                <h4 class="group inner list-group-item-heading" th:text="${item.key.name}">Product name</h4>
+                                <p class="group inner list-group-item-text" th:text="${item.key.description}">Product description... </p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-md-1" style="text-align: center">
+                        <input type="email" class="form-control" id="quantity" th:attr="value=${item.value}">
+                    </td>
+                    <td class="col-md-1 text-center" th:text="${item.key.getDefaultPrice()}"><strong>$4.99</strong></td>
+                    <td class="col-md-1 text-center"
+                        th:text="${#numbers.formatDecimal(item.value*item.key.getDefaultPrice(), 0, 'COMMA', 2, 'POINT')}"
+                    ><strong>$9.98</strong>
+                    </td>
+                    <form th:action="'/cart'" method="post">
+                        <td class="col-md-1">
+                            <button type="submit" name="addRemove" th:value="'add' + ${item.key.id}" class="btn btn-success">
+                                <span class="glyphicon glyphicon-plus"></span> Add
+                            </button>
+                        </td>
+                        <td class="col-md-1">
+                            <button type="submit" name="addRemove" th:value="'remove' + ${item.key.id}" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-minus"></span> Remove
+                            </button>
+                        </td>
+                    </form>
+                </tr>
+
+
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><h5>Subtotal</h5></td>
+                    <td class="text-right" th:text="${#numbers.formatDecimal(subTotal, 0, 'COMMA', 2, 'POINT')}">
+                        <h5><strong>$24.59</strong></h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><h5>Estimated shipping</h5></td>
+                    <td class="text-right"><h5><strong>6.00</strong></h5></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><h3>Total</h3></td>
+                    <td class="text-right"><h3><strong th:text="${subTotal}+6.00">$31.53</strong></h3></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <button type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                        </button></td>
+                    <td>
+                        <button type="button" class="btn btn-success">
+                            Checkout <span class="glyphicon glyphicon-play"></span>
+                        </button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
