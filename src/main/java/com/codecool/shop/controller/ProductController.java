@@ -47,7 +47,6 @@ public class ProductController extends HttpServlet {
         try {
             String category = req.getParameter("category");
             context.setVariable("category", category);
-            System.out.println(category);
 
         }catch (Exception e){
             context.setVariable("category", productDataStore.find(0));
