@@ -14,17 +14,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/checkout"})
-public class CheckoutServlet  extends HttpServlet {
+@WebServlet(urlPatterns = {"/checkout", "/payment"})
+public class CheckoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         int subTotal = 0;
-        for (Map.Entry<Product,Integer> p: CartItems.cartItems.entrySet()) {
+        for (Map.Entry<Product, Integer> p : CartItems.cartItems.entrySet()) {
             Product key = p.getKey();
             Integer value = p.getValue();
 
-            subTotal += (key.getDefaultPrice()*value);
+            subTotal += (key.getDefaultPrice() * value);
         }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
@@ -33,6 +33,8 @@ public class CheckoutServlet  extends HttpServlet {
         context.setVariable("shoppingItems", CartItems.cartItems);
         context.setVariable("subTotal", subTotal);
 
-        engine.process("product/checkout.html", context, resp.getWriter());
+        if (req.getServletPath().equals("/checkout"))
+            engine.process("product/checkout.html", context, resp.getWriter());
+        else if (req.getServletPath().equals("/payment")) engine.process("product/payment.html", context, resp.getWriter());
     }
 }
