@@ -109,7 +109,7 @@ body {
     display: none !important;
 }
 
-.btn.btn-default.dropdown-toggle {
+.btn.btn-primary.dropdown-toggle {
     width: 200px;
 }
 
