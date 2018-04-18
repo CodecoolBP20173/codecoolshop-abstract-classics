@@ -39,14 +39,5 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
 
-
-        //For trying out the cartList only
-        /*CartItems.cartItemList.add(productDataStore.find(1));
-        CartItems.cartItemList.add(productDataStore.find(1));
-        CartItems.cartItemList.add(productDataStore.find(2));
-        CartItems.cartItemList.add(productDataStore.find(3));
-        CartItems.cartItemList.add(productDataStore.find(1));
-        CartItems.cartItemList.add(productDataStore.find(3));*/
-        //System.out.println(CartItems.cartItemList.get(0).getProductCategory().getName());   //CartItems.cartItemList.get(0).getProductCategory().getName();
     }
 }
