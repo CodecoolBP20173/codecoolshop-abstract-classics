@@ -41,19 +41,24 @@ public class ProductController extends HttpServlet {
 //        context.setVariables(params);
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.getAll());
-        context.setVariable("products", productDataStore.getAll());
-        context.setVariable("supplier", productSupplierStore.getAll());
-        engine.process("product/index.html", context, resp.getWriter());
-        try {
-            String category = req.getParameter("category");
-            context.setVariable("category", category);
 
-        }catch (Exception e){
-            context.setVariable("category", productDataStore.find(0));
+        context.setVariable("supplier", productSupplierStore.getAll());
+
+
+        String queryString = req.getQueryString();
+        if (queryString != null) {
+            if (req.getQueryString().contains("category")) {
+                int categoryId = Integer.valueOf(req.getParameter("category"));
+                context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(categoryId)));
+            } else if (req.getQueryString().contains("supplier")) {
+                int supplierId = Integer.valueOf(req.getParameter("supplier"));
+                context.setVariable("products", productDataStore.getBy(productSupplierStore.find(supplierId)));
+            }
+        } else {
+            context.setVariable("products", productDataStore.getAll());
         }
 
-
-
+        engine.process("product/index.html", context, resp.getWriter());
     }
 
 }
