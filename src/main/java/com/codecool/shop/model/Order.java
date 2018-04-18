@@ -52,4 +52,44 @@ public class Order extends BaseModel {
     public Map<String, String> getCustomerData() {
         return customerData;
     }
+
+    public String getCustomerName() {
+        return customerData.get("name");
+    }
+
+    public void setCustomerName(String name) {
+        customerData.replace("name", name);
+    }
+
+    public String getCustomerEmail() {
+        return customerData.get("email");
+    }
+
+    public void setCustomerEmail(String email) {
+        customerData.replace("email", email);
+    }
+
+    public String getCustomerPhone() {
+        return customerData.get("phone");
+    }
+
+    public void setCustomerPhone(String phone) {
+        customerData.replace("phone", phone);
+    }
+
+    public String getCustomerBillingAddress() {
+        return customerData.get("billingAddress");
+    }
+
+    public void setCustomerBillingAddress(String billingAddress) {
+        customerData.replace("billingAddress", billingAddress);
+    }
+
+    public String getCustomerShippingAddress() {
+        return customerData.get("shippingAddress");
+    }
+
+    public void setCustomerShippingAddress(String shippingAddress) {
+        customerData.replace("shippingAddress", shippingAddress);
+    }
 }
