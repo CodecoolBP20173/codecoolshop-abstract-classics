@@ -17,8 +17,6 @@ import java.io.IOException;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
-
 
 @WebServlet(urlPatterns = {"/cart/*", "/cart"})
 public class ShopCartServlet extends HttpServlet {
@@ -69,54 +67,7 @@ public class ShopCartServlet extends HttpServlet {
         context.setVariable("subTotal", subTotal);
         engine.process("product/cart.html", context, resp.getWriter());
 
-        // testing context
-        /*List<Product> products = new ArrayList<>();
 
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        Product addedItem = productDataStore.find(1);
-        products.add(addedItem);
-        addedItem = productDataStore.find(2);
-        products.add(addedItem);
-        products.add(addedItem);
-        addedItem = productDataStore.find(3);
-        products.add(addedItem);*/
-
-
-
-        /*
-        * HashMap<String, HashMap> selects = new HashMap<String, HashMap>();
-
-for(Map.Entry<String, HashMap> entry : selects.entrySet()) {
-    String key = entry.getKey();
-    HashMap value = entry.getValue();
-
-    // do what you have to do here
-    // In your case, another loop.
-}
-        * */
-
-/*        String title = "Cart";
-        String itemsString = "";
-        PrintWriter out = resp.getWriter();
-        for (Map.Entry<Product,Integer> p: products.entrySet()) {
-            Product key = p.getKey();
-            Integer value = p.getValue();
-            itemsString = itemsString + "<tr><td>" + key.getName() + "</td>" + "<td>" + key.getPrice() + "</td>" + "<td>"+ value + "</td>" +
-                    "</tr>";
-        }
-
-
-        out.println(
-                "<html>\n" +
-                        "<head><title>" + title + "</title></head>\n" +
-                        "<body>\n" +
-                        "<h1 align = \"center\">" + title + "</h1>\n" +
-                        "<table border=1 cellpadding=4 style=\"border-collapse:collapse;\">" +
-                        "<tr>"+"<th>Name</th>" + "<th>Unit Price</th>" + "<th>Quantity</th>" + "</tr>" + itemsString + "</table>" +
-                        "<br><br>" +
-                        "<font size=\"6\"><b>Sum of Price: " + "SUm" + "</b></font>" +
-                        "</body></html>"
-        );*/
     }
 
     private void removeAddCart(String button) {
