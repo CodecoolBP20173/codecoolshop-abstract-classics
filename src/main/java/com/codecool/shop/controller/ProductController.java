@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/"})
+@WebServlet(urlPatterns = {"/","/*"})
 public class ProductController extends HttpServlet {
 
     @Override
@@ -34,6 +34,8 @@ public class ProductController extends HttpServlet {
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
 
+
+
         // This context is specific to Web Applications
         WebContext context = new WebContext(req, resp, req.getServletContext());
 //        context.setVariables(params);
@@ -42,6 +44,17 @@ public class ProductController extends HttpServlet {
         context.setVariable("products", productDataStore.getAll());
         context.setVariable("supplier", productSupplierStore.getAll());
         engine.process("product/index.html", context, resp.getWriter());
+        try {
+            String category = req.getParameter("category");
+            context.setVariable("category", category);
+            System.out.println(category);
+
+        }catch (Exception e){
+            context.setVariable("category", productDataStore.find(0));
+        }
+
+
+
     }
 
 }
