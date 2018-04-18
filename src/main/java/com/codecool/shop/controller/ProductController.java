@@ -1,10 +1,12 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.Cart.CartItems;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -25,6 +27,12 @@ public class ProductController extends HttpServlet {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 
+        int itemsInCart = 0;
+
+        for (Product cartItem: CartItems.cartItemList) {
+            itemsInCart++;
+        }
+
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));
 //        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
@@ -37,11 +45,17 @@ public class ProductController extends HttpServlet {
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.find(1));
         context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        context.setVariable("itemsInCart", itemsInCart);
         engine.process("product/index.html", context, resp.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        int productToAddId = Integer.valueOf(req.getParameter("add-button"));
+
+        CartItems.addItem(productDataStore.find(productToAddId));
+
         resp.sendRedirect("/");
     }
 }
