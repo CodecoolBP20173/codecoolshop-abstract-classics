@@ -41,4 +41,14 @@ public class OrderDaoMem implements OrderDao {
     public List<Order> getAll() {
         return orders;
     }
+
+    @Override
+    public int getNumberOfOrders() {
+        return orders.size();
+    }
+
+    @Override
+    public boolean noOrderPlaced() {
+        return orders.size() == 0;
+    }
 }

@@ -45,6 +45,14 @@ public class Order extends BaseModel {
         }
     }
 
+    public List<Product> getItemList() {
+        return itemList;
+    }
+
+    public int getNumberOfItems() {
+        return itemList.size();
+    }
+
     public Map<Product, Integer> getLineItems() {
         return lineItems;
     }
