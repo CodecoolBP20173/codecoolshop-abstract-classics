@@ -74,8 +74,9 @@
                                 <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                             </div>
                             <div class="col-xs-12 col-md-6">
-                                <form action="/" method="post">
+                                <form th:action="${#httpServletRequest.getRequestURI()}" method="post">
                                     <button type="submit" class="btn btn-success" name="add-button" th:value="${prod.id}">Add to cart</button>
+                                    <input hidden name="current-uri" th:value="${#httpServletRequest.getRequestURI()} +'?' + ${#httpServletRequest.getQueryString()}">
                                 </form>
                             </div>
                         </div>

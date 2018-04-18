@@ -70,6 +70,8 @@ public class ProductController extends HttpServlet {
 
         CartItems.addItem(productDataStore.find(productToAddId));
 
-        resp.sendRedirect("/");
+        String currentURI = req.getParameter("current-uri");
+
+        resp.sendRedirect(currentURI);
     }
 }
