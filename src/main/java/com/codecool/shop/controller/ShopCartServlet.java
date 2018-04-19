@@ -82,10 +82,6 @@ public class ShopCartServlet extends HttpServlet {
                 order.decreaseItemNumber(key, it);
             }
         }
-
-        if (order.getNumberOfItems() == 0) {
-            orderDataStore.remove(order.getId());
-        }
     }
 
 }
