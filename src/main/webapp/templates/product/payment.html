@@ -31,7 +31,7 @@
 <h1>Payment methods</h1>
 <form class="form-horizontal" action="/">
 
-    <div class="panel-group" id="accordion">
+    <div class="panel-group" id="accordion" th:with="isCoinsEmpty=false">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -48,9 +48,8 @@
                         <label class="control-label col-sm-2" for="accountNumber">Account:</label>
                         <img src="/static/img/coins.png" height="30">
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="accountNumber"
-                                   placeholder="Enter your account number"
-                                   required="required">
+                            <input type="number" class="form-control" id="accountNumber" name="accountNumber"
+                                   placeholder="Enter your account number">
                         </div>
                     </div>
 
@@ -58,8 +57,7 @@
                         <label class="control-label col-sm-2" for="codeCoinPwd">Password:</label>
                         <div class="col-sm-4">
                             <input type="password" class="form-control" id="codeCoinPwd"
-                                   placeholder="1234"
-                                   required="required">
+                                   placeholder="1234">
                         </div>
                     </div>
 
@@ -84,8 +82,7 @@
                         <img src="/static/img/visa.png" height="10">
                         <div class="col-sm-4">
                             <input type="number" class="form-control" id="ccCardNumber"
-                                   placeholder="card number"
-                                   required="required">
+                                   placeholder="card number">
                         </div>
                     </div>
 
@@ -93,8 +90,7 @@
                         <label class="control-label col-sm-2" for="ccCardHolder">Card holder:</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="ccCardHolder"
-                                   placeholder="Card holder"
-                                   required="required">
+                                   placeholder="Card holder">
                         </div>
                     </div>
 
@@ -102,8 +98,7 @@
                         <label class="control-label col-sm-2" for="ccCardExpiry">Card holder:</label>
                         <div class="col-sm-4">
                             <input type="date" class="form-control" id="ccCardExpiry"
-                                   placeholder="Expiry date"
-                                   required="required">
+                                   placeholder="Expiry date">
                         </div>
                     </div>
 
@@ -111,8 +106,7 @@
                         <label class="control-label col-sm-2" for="ccCardExpiry">Card holder:</label>
                         <div class="col-sm-4">
                             <input type="password" class="form-control" id="ccCardCode"
-                                   placeholder="1234"
-                                   required="required">
+                                   placeholder="1234">
                         </div>
                     </div>
 

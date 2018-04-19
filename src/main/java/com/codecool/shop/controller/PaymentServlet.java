@@ -39,4 +39,26 @@ public class PaymentServlet extends HttpServlet {
 
         engine.process("product/payment.html", context, resp.getWriter());
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        /*customerData.put("name", "");
+        customerData.put("email", "");
+        customerData.put("phone", "");
+        customerData.put("billingAddress", "");
+        customerData.put("shippingAddress", "");*/
+
+        OrderDaoMem orderDaoMem = OrderDaoMem.getInstance();
+        Order order = orderDaoMem.find(1);
+        order.setCustomerName(req.getParameter("name"));
+        order.setCustomerEmail(req.getParameter("email"));
+        order.setCustomerPhone(req.getParameter("phone"));
+        order.setCustomerBillingAddress(req.getParameter("billingAddress"));
+        order.setCustomerShippingAddress(req.getParameter("shippingAddress"));
+
+        System.out.println(order.getCustomerName());
+        String currentURI = "/payment";
+        resp.sendRedirect(currentURI);
+
+    }
 }
