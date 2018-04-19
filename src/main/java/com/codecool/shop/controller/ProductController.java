@@ -1,12 +1,14 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.Cart.CartItems;
+import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import org.thymeleaf.TemplateEngine;
@@ -29,11 +31,15 @@ public class ProductController extends HttpServlet {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao productSupplierStore = SupplierDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoMem.getInstance();
 
-        int itemsInCart = 0;
+        int itemsInCart;
 
-        for (Product cartItem: CartItems.cartItemList) {
-            itemsInCart++;
+        if (orderDataStore.noOrderPlaced()) {
+            itemsInCart = 0;
+        } else {
+            Order order = orderDataStore.find(1);
+            itemsInCart = order.getNumberOfItems();
         }
 
 //        Map params = new HashMap<>();
@@ -72,10 +78,22 @@ public class ProductController extends HttpServlet {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         int productToAddId = Integer.valueOf(req.getParameter("add-button"));
 
-        CartItems.addItem(productDataStore.find(productToAddId));
+        OrderDao orderDataStore = OrderDaoMem.getInstance();
+
+        if (orderDataStore.noOrderPlaced()) {
+
+            int numberOfOrders = orderDataStore.getNumberOfOrders();
+            String orderName = "Order-" + (numberOfOrders + 1);
+            Order order = new Order(orderName);
+            orderDataStore.add(order);
+            order.addItem(productDataStore.find(productToAddId));
+
+        } else {
+            Order order = orderDataStore.find(1);
+            order.addItem(productDataStore.find(productToAddId));
+        }
 
         String currentURI = req.getParameter("current-uri");
-
         resp.sendRedirect(currentURI);
     }
 }
