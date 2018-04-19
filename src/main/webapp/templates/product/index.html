@@ -35,9 +35,11 @@
     <div class="container">
         <h1>Codecool Shop</h1>
         <a class="cartlink" href="/cart">
-            <span class="fa-layers fa-fw fa-3x">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="fa-layers-counter" th:text="${itemsInCart}"></span>
+            <span id="myPopover" class="d-inline-block" data-toggle="popover" title="The following item was added to your cart:" data-img="/static/img/product_4.jpg" th:data-content="${popupContentName}" >
+                <span class="fa-layers fa-fw fa-3x">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="fa-layers-counter"  th:text="${itemsInCart}"></span>
+                </span>
             </span>
         </a>
     </div>
@@ -115,6 +117,30 @@
     </div>
 
 </div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-f id="myModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            This will be the content of the card
+        </div>
+    </div>
+</div>
+<div th:if="${active == 'active'}">
+    <script async>
+        $("#myPopover").popover({
+            placement: 'auto'
+        });
+
+        $("#myPopover").popover('show');
+        setTimeout(function () {
+            $(".popover").fadeOut('slow');
+        }, 2000);
+
+
+
+
+
+    </script>
+</div>>
 
 <div th:replace="footer.html :: copy"></div>
 

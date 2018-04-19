@@ -26,6 +26,8 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/","/*"})
 public class ProductController extends HttpServlet {
 
+    private int addedId = 0;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
@@ -69,6 +71,13 @@ public class ProductController extends HttpServlet {
         } else {
             context.setVariable("products", productDataStore.getAll());
         }
+        context.setVariable("active", "passive");
+        if (addedId != 0) {
+            context.setVariable("active", "active");
+            context.setVariable("popupContentName", productDataStore.find(addedId).getName());
+            context.setVariable("popupContentId", productDataStore.find(addedId).getId());
+            addedId = 0;
+        }
 
         engine.process("product/index.html", context, resp.getWriter());
     }
@@ -92,7 +101,7 @@ public class ProductController extends HttpServlet {
             Order order = orderDataStore.find(1);
             order.addItem(productDataStore.find(productToAddId));
         }
-
+        addedId = productToAddId;
         String currentURI = req.getParameter("current-uri");
         resp.sendRedirect(currentURI);
     }
