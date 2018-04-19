@@ -42,11 +42,6 @@ public class PaymentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*customerData.put("name", "");
-        customerData.put("email", "");
-        customerData.put("phone", "");
-        customerData.put("billingAddress", "");
-        customerData.put("shippingAddress", "");*/
 
         OrderDaoMem orderDaoMem = OrderDaoMem.getInstance();
         Order order = orderDaoMem.find(1);
@@ -55,8 +50,7 @@ public class PaymentServlet extends HttpServlet {
         order.setCustomerPhone(req.getParameter("phone"));
         order.setCustomerBillingAddress(req.getParameter("billingAddress"));
         order.setCustomerShippingAddress(req.getParameter("shippingAddress"));
-
-        System.out.println(order.getCustomerName());
+        //TODO: radio buttons for payment -> enable the right one at payment
         String currentURI = "/payment";
         resp.sendRedirect(currentURI);
 
