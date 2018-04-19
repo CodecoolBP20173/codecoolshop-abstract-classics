@@ -64,10 +64,8 @@ public class Initializer implements ServletContextListener {
         //productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
         //productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         //productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
-        productDataStore.add(new Product("Mother Magdalena", 51, "USD", "She is our best selling Granny!", people, womb));
-        productDataStore.add(new Product("The Bible Flask", 24.95f, "USD", "The good book with a flask. Yes, this bible cleverly sneaks in a 4 oz stainless steel flask inside of the hollowed out pages.\n" +
-                "\n" +
-                "Genius with a little evil on top. Thank God!", booze, catholicChurch));
+        productDataStore.add(new Product("Mother Magdalena", 51, "USD", "She is our best selling Granny! Straight from the tevevision series \" Among Friends\". Charming personality, replaces your mother when needed. ", people, womb));
+        productDataStore.add(new Product("The Bible Flask", 24.95f, "USD", "The good book with a flask. Yes, this bible cleverly sneaks in a 4 oz stainless steel flask inside of the hollowed out pages.", booze, catholicChurch));
         productDataStore.add(new Product("Boobie Bag Soft Flask", 12, "USD", "INSTANT BOOB JOB!" +
                 "  Our Boobie Bags will give you a 4 oz “lift” each side while comfortably  hidden in your bra. ", booze, plasticSurgeon));
         productDataStore.add(new Product("Umbrella Flask", 13.99f, "USD", "Fake Umbrella Flask holds 9 oz. of your favorite party beverage!", booze, umbrellaFactory));
