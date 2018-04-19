@@ -41,7 +41,12 @@ public class CheckoutServlet extends HttpServlet {
 
             context.setVariable("shoppingItems", order.getLineItems());
             context.setVariable("subTotal", subTotal);
-
+            context.setVariable("name", order.getCustomerName());
+            context.setVariable("email", order.getCustomerEmail());
+            context.setVariable("phone", order.getCustomerPhone());
+            context.setVariable("billingAddress", order.getCustomerBillingAddress());
+            context.setVariable("shippingAddress", order.getCustomerShippingAddress());
+            context.setVariable("paymentMethod", order.getCustomerPaymentMethod());
 
             engine.process("product/checkout.html", context, resp.getWriter());
         }
