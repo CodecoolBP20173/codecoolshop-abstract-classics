@@ -18,6 +18,7 @@ public class Order extends BaseModel {
         customerData.put("phone", "");
         customerData.put("billingAddress", "");
         customerData.put("shippingAddress", "");
+        customerData.put("paymentMethod", "");
     }
 
     public void addItem (Product product) {
@@ -99,5 +100,13 @@ public class Order extends BaseModel {
 
     public void setCustomerShippingAddress(String shippingAddress) {
         customerData.replace("shippingAddress", shippingAddress);
+    }
+
+    public String getCustomerPaymentMethod() {
+        return customerData.get("paymentMethod");
+    }
+
+    public void setCustomerPaymentMethod(String paymentMethod) {
+        customerData.replace("paymentMethod", paymentMethod);
     }
 }

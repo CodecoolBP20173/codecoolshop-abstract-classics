@@ -101,7 +101,7 @@
                         description... </p>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
-                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                            <p class="lead" th:text="${prod.getDefaultPrice()}">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <form th:action="${#httpServletRequest.getRequestURI()}" method="post">
