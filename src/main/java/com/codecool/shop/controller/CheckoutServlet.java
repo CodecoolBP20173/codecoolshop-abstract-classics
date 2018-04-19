@@ -1,7 +1,9 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.Cart.CartItems;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.dao.implementation.OrderDaoMem;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -18,9 +20,11 @@ import java.util.Map;
 public class CheckoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        OrderDao orderDataStore = OrderDaoMem.getInstance();
+        Order order = orderDataStore.find(1);
 
         int subTotal = 0;
-        for (Map.Entry<Product, Integer> p : CartItems.cartItems.entrySet()) {
+        for (Map.Entry<Product, Integer> p : order.getLineItems().entrySet()) {
             Product key = p.getKey();
             Integer value = p.getValue();
 
@@ -30,7 +34,7 @@ public class CheckoutServlet extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        context.setVariable("shoppingItems", CartItems.cartItems);
+        context.setVariable("shoppingItems", order.getLineItems());
         context.setVariable("subTotal", subTotal);
 
 

@@ -1,6 +1,5 @@
 package com.codecool.shop.config;
 
-import com.codecool.shop.Cart.CartItems;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
