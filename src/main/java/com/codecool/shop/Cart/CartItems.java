@@ -20,15 +20,6 @@ public class CartItems {
         increaseItemNumber(product);
     }
 
-    /*public static void removeItem (Product product) {
-        if (cartItemList.contains(product)) {
-            cartItemList.remove(product);
-            decreaseItemNumber(product);
-        }
-
-    }*/
-
-
     public static void increaseItemNumber(Product product) {
         if (cartItems.containsKey(product)) {
             cartItems.put(product, cartItems.get(product) + 1);
