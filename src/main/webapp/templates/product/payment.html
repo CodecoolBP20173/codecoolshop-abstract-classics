@@ -31,7 +31,7 @@
 <h1>Payment methods</h1>
 <form class="form-horizontal" action="/">
 
-    <div class="panel-group" id="accordion" th:with="isCoinsEmpty=false">
+    <div class="panel-group" id="accordion">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -41,15 +41,15 @@
             </div>
 
             <!--CodeCoins-->
-            <div id="coinsCollapse" class="panel-collapse collapse in">
-                <div class="panel-body">
+            <div id="coinsCollapse" class="panel-collapse collapse" th:classappend="${paymentMethod eq 'ccCoins'} ? in: ''">
+                <div class="panel-body" th:if="${paymentMethod eq 'ccCoins'}">
 
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="accountNumber">Account:</label>
                         <img src="/static/img/coins.png" height="30">
                         <div class="col-sm-4">
                             <input type="number" class="form-control" id="accountNumber" name="accountNumber"
-                                   placeholder="Enter your account number">
+                                   placeholder="Enter your account number" required="required" >
                         </div>
                     </div>
 
@@ -57,7 +57,7 @@
                         <label class="control-label col-sm-2" for="codeCoinPwd">Password:</label>
                         <div class="col-sm-4">
                             <input type="password" class="form-control" id="codeCoinPwd"
-                                   placeholder="1234">
+                                   placeholder="1234" required="required" >
                         </div>
                     </div>
 
@@ -74,15 +74,15 @@
             </div>
 
             <!--CC card-->
-            <div id="ccCardCollapse" class="panel-collapse collapse">
-                <div class="panel-body">
+            <div id="ccCardCollapse" class="panel-collapse collapse" th:classappend="${paymentMethod eq 'ccCard'} ? in: ''">
+                <div class="panel-body" th:if="${paymentMethod eq 'ccCard'}">
 
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="ccCardNumber">Account:</label>
+                        <label class="control-label col-sm-2" for="ccCardNumber">Card number:</label>
                         <img src="/static/img/visa.png" height="10">
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="ccCardNumber"
-                                   placeholder="card number">
+                            <input class="form-control" id="ccCardNumber"
+                                   placeholder="card number" minlength="16" maxlength="16" inputmode="numeric" pattern="\d{16}" required="required" >
                         </div>
                     </div>
 
@@ -90,23 +90,23 @@
                         <label class="control-label col-sm-2" for="ccCardHolder">Card holder:</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="ccCardHolder"
-                                   placeholder="Card holder">
+                                   placeholder="Card holder" required="required" >
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="ccCardExpiry">Card holder:</label>
+                        <label class="control-label col-sm-2" for="ccCardExpiry">Expiry date:</label>
                         <div class="col-sm-4">
                             <input type="date" class="form-control" id="ccCardExpiry"
-                                   placeholder="Expiry date">
+                                   placeholder="Expiry date" required="required" th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="ccCardExpiry">Card holder:</label>
+                        <label class="control-label col-sm-2" for="ccCardCode">CVC code:</label>
                         <div class="col-sm-4">
                             <input type="password" class="form-control" id="ccCardCode"
-                                   placeholder="1234">
+                                   placeholder="***" minlength="3" maxlength="3" pattern="\d{3}" required="required" >
                         </div>
                     </div>
 

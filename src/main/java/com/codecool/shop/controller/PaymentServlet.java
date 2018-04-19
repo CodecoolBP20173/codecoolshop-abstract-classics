@@ -36,6 +36,7 @@ public class PaymentServlet extends HttpServlet {
 
         context.setVariable("shoppingItems", order.getLineItems());
         context.setVariable("subTotal", subTotal);
+        context.setVariable("paymentMethod", order.getCustomerPaymentMethod());
 
         engine.process("product/payment.html", context, resp.getWriter());
     }
@@ -50,7 +51,7 @@ public class PaymentServlet extends HttpServlet {
         order.setCustomerPhone(req.getParameter("phone"));
         order.setCustomerBillingAddress(req.getParameter("billingAddress"));
         order.setCustomerShippingAddress(req.getParameter("shippingAddress"));
-        //TODO: radio buttons for payment -> enable the right one at payment
+        order.setCustomerPaymentMethod(req.getParameter("paymentMethod"));
         String currentURI = "/payment";
         resp.sendRedirect(currentURI);
 
