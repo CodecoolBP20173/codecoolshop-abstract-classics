@@ -10,6 +10,12 @@
     border-radius: 0px;
     border: 2px solid dimgrey;
     transition: 0.5s;
+
+    background: linear-gradient(355deg, rgba(255,241,215,1) 5%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+
+
+
+
 }
 
 .thumbnail:hover {
