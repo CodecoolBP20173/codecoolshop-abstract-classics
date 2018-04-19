@@ -47,17 +47,46 @@
 
 <div class="container">
     <div class="row">
-        <div class="col col-md-3" th:each="category,iterStat : ${category}">
-            <a th:href="@{/(category=${category.id})}" class="btn btn-primary" th:text="${category.name}">Category
-                Title></a>
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                Select Product Category
+                <i class="fas fa-angle-right"></i>
+                <i class="fas fa-angle-right"></i>
+            </button>
+            <table class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <tr>
+                    <div th:each="category,iterStat : ${category}">
+                        <td><a th:href="@{/(category=${category.id})}" class="btn btn-default" th:text="${category.name}">Category
+                            Title></a>
+                        </td>
+                    </div>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="row">
-        <div class="col col-md-3" th:each="supplier,iterStat : ${supplier}">
-            <a th:href="@{/(supplier=${supplier.id})}" class="btn btn-danger" th:text="${supplier.name}">Supplier
-                name</a>
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown">
+                Select Product Supplier
+                <i class="fas fa-angle-right"></i>
+                <i class="fas fa-angle-right"></i>
+            </button>
+            <table class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                <tr>
+                    <div th:each="supplier,iterStat : ${supplier}">
+                        <td><a th:href="@{/(supplier=${supplier.id})}" class="btn btn-default" th:text="${supplier.name}">Supplier
+                            Title></a>
+                        </td>
+                    </div>
+                </tr>
+            </table>
         </div>
     </div>
+    <div class="row">
+        <a href="/" class="btn btn-primary" id="showAllButton" >Select All Products</a>
+    </div>
+    <br>
+    <br>
 
     <div id="products" class="row list-group">
         <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
