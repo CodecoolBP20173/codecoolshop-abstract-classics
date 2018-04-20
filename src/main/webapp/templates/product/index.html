@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="Codecool" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <title>Codecool Shop</title>
 
@@ -13,45 +13,108 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <script src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <style></style>
 </head>
 
 <body>
 
-<div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
+<div class="jumbotron text-center lines">
+    <div class="container">
+        <div class="header-container">
+            <img id="logo" src="/static/img/logo_2.png" width="250" alt="">
+            <h1 class="handWritted">Abstract Shop</h1>
+        </div>
+        <a class="cartlink" href="/cart">
+            <span id="myPopover" class="d-inline-block" data-toggle="popover" title="The following item was added to your cart:" data-img="/static/img/product_4.jpg" th:data-content="${popupContentName}" >
+                <span class="fa-layers fa-fw fa-3x">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="fa-layers-counter"  th:text="${itemsInCart}"></span>
+                </span>
+            </span>
+        </a>
+    </div>
+
+
 </div>
 
 <div class="container">
-    <div class="well well-sm">
-        <strong th:text="${category.name}">Category Title</strong>
+    <div class="row">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                Select Product Category
+                <i class="fas fa-angle-right"></i>
+                <i class="fas fa-angle-right"></i>
+            </button>
+            <table class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <tr>
+                    <div th:each="category,iterStat : ${category}">
+                        <td><a th:href="@{/(category=${category.id})}" class="btn btn-default" th:text="${category.name}">Category
+                            Title></a>
+                        </td>
+                    </div>
+                </tr>
+            </table>
+        </div>
     </div>
+    <div class="row">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown">
+                Select Product Supplier
+                <i class="fas fa-angle-right"></i>
+                <i class="fas fa-angle-right"></i>
+            </button>
+            <table class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                <tr>
+                    <div th:each="supplier,iterStat : ${supplier}">
+                        <td><a th:href="@{/(supplier=${supplier.id})}" class="btn btn-default" th:text="${supplier.name}">Supplier
+                            Title></a>
+                        </td>
+                    </div>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/" class="btn btn-primary" id="showAllButton" >Select All Products</a>
+    </div>
+    <br>
+    <br>
 
     <div id="products" class="row list-group">
-
         <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <img class="group list-group-image" src="https://kremmania.hu/UploadedImages/7/alma-300-300.png"
+                     th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
                 <div class="caption">
                     <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
-                    <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
+                    <p class="group inner list-group-item-text" th:text="${prod.description}">Product
+                        description... </p>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
-                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                            <p class="lead" th:text="${prod.getDefaultPrice()}">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="#">Add to cart</a>
+                            <form th:action="${#httpServletRequest.getRequestURI()}" method="post">
+                                <button type="submit" class="btn btn-success" name="add-button" th:value="${prod.id}">Add to cart</button>
+                                <input hidden name="current-uri" th:value="${#httpServletRequest.getRequestURI()} +'?' + ${#httpServletRequest.getQueryString()}" th:if="${ #httpServletRequest.getQueryString() != null}">
+                                <input hidden name="current-uri" th:value="${#httpServletRequest.getRequestURI()}" th:if="${#httpServletRequest.getQueryString() eq null}">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -59,6 +122,25 @@
         </div>
     </div>
 
+</div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-f id="myModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            This will be the content of the card
+        </div>
+    </div>
+</div>
+<div th:if="${active == 'active'}">
+    <script async>
+        $("#myPopover").popover({
+            placement: 'auto'
+        });
+
+        $("#myPopover").popover('show');
+        setTimeout(function () {
+            $(".popover").fadeOut('slow');
+        }, 2000);
+    </script>
 </div>
 
 <div th:replace="footer.html :: copy"></div>

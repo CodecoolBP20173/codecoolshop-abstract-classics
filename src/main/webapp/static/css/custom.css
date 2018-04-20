@@ -8,7 +8,22 @@
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
+    border: 2px solid dimgrey;
+    transition: 0.5s;
+
+    background: linear-gradient(355deg, rgba(255,241,215,1) 5%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+
+
+
+
 }
+
+.thumbnail:hover {
+    -webkit-box-shadow: 0px 0px 27px 16px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0px 0px 27px 16px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 27px 16px rgba(0,0,0,0.7);
+}
+
 .thumbnail img
 {
     margin-top: 10px;
@@ -59,4 +74,113 @@
 .list-group-item-text
 {
     margin: 0 0 11px;
+}
+.cartlink
+{
+    text-decoration: none;
+    color: inherit;
+}
+.cartlink:hover
+{
+    color: black;
+}
+
+/*for prettify look*/
+body {
+    background: #eae3d5;
+    background: linear-gradient(to top, #78767a 5%,  #eae3d5 70%);
+
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* actual dropdown animation */
+.dropdown .dropdown-menu {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+
+    max-height: 0;
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+    top: 0;
+    padding: 0;
+    border: none;
+    margin: 0;
+    min-width: 0;
+}
+
+
+.dropdown.open .dropdown-menu {
+    max-height: 200px;
+    opacity: 1;
+    position:absolute;
+    float:right;
+    top: 0;
+    left: 250px;
+
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.btn.btn-primary.dropdown-toggle {
+    width: 200px;
+}
+
+#showAllButton {
+    width: 200px;
+}
+
+#products {
+    border-left: 4px solid rgba(120, 118, 122, 0.74);
+    border-right: 4px solid rgba(120, 118, 122, 0.74);
+    border-bottom: 4px solid rgba(120, 118, 122, 0.74);
+
+}
+
+.handWritted {
+    /*font-family: 'Tangerine', serif;*/
+    font-family: 'Berkshire Swash', cursive;
+    font-size: 70px;
+    text-shadow: 4px 4px 4px #aaa;
+}
+
+.stripes {
+    background:
+        linear-gradient(63deg, #999 23%, transparent 23%) 7px 0,
+        linear-gradient(63deg, transparent 74%, #999 78%),
+        linear-gradient(63deg, transparent 34%, #999 38%, #999 58%, transparent 62%),
+        #444;
+    background-size: 16px 48px;
+}
+
+.lines {
+    background-color: #5e594d;
+    background-image: url("https://www.transparenttextures.com/patterns/brushed-alum.png");
+}
+
+#logo {
+    position: absolute;
+    left: 50px;
+    top: 20px;
+    width: 200px;
+    height: auto;
+}
+
+.group.list-group-image {
+    height: 355px;
+    width: auto;
+}
+
+.panel.panel-default {
+    background-color: transparent ;
+    border: none;
+    text-align: center;
 }
