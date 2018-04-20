@@ -8,7 +8,22 @@
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
+    border: 2px solid dimgrey;
+    transition: 0.5s;
+
+    background: linear-gradient(355deg, rgba(255,241,215,1) 5%, rgba(255,255,255,1) 40%, rgba(255,255,255,1) 100%);
+
+
+
+
 }
+
+.thumbnail:hover {
+    -webkit-box-shadow: 0px 0px 27px 16px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0px 0px 27px 16px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 27px 16px rgba(0,0,0,0.7);
+}
+
 .thumbnail img
 {
     margin-top: 10px;
@@ -72,7 +87,13 @@
 
 /*for prettify look*/
 body {
-    padding: 1em;
+    background: #eae3d5;
+    background: linear-gradient(to top, #78767a 5%,  #eae3d5 70%);
+
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 /* actual dropdown animation */
@@ -145,3 +166,21 @@ body {
     background-image: url("https://www.transparenttextures.com/patterns/brushed-alum.png");
 }
 
+#logo {
+    position: absolute;
+    left: 50px;
+    top: 20px;
+    width: 200px;
+    height: auto;
+}
+
+.group.list-group-image {
+    height: 355px;
+    width: auto;
+}
+
+.panel.panel-default {
+    background-color: transparent ;
+    border: none;
+    text-align: center;
+}

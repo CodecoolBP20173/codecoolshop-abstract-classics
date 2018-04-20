@@ -36,8 +36,10 @@
 
 <div class="jumbotron text-center lines">
     <div class="container">
-        <img src="/static/img/logo_2.png" width="250" alt="">
-        <h1 class="handWritted">Abstract Shop</h1>
+        <div class="header-container">
+            <img id="logo" src="/static/img/logo_2.png" width="250" alt="">
+            <h1 class="handWritted">Abstract Shop</h1>
+        </div>
         <a class="cartlink" href="/cart">
             <span id="myPopover" class="d-inline-block" data-toggle="popover" title="The following item was added to your cart:" data-img="/static/img/product_4.jpg" th:data-content="${popupContentName}" >
                 <span class="fa-layers fa-fw fa-3x">
@@ -138,13 +140,8 @@
         setTimeout(function () {
             $(".popover").fadeOut('slow');
         }, 2000);
-
-
-
-
-
     </script>
-</div>>
+</div>
 
 <div th:replace="footer.html :: copy"></div>
 
