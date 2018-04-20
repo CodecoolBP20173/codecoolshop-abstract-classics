@@ -7,6 +7,7 @@
 
     <title>Codecool Shop</title>
 
+
     <!-- Latest compiled and minified Jquery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -25,7 +26,7 @@
             crossorigin="anonymous"></script>
 
     <script src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-
+    <script src="/static/script/index.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
     <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
@@ -130,17 +131,8 @@
         </div>
     </div>
 </div>
-<div th:if="${active == 'active'}">
-    <script async>
-        $("#myPopover").popover({
-            placement: 'auto'
-        });
+<div id="popoverData" th:attr="data-name=${active}">
 
-        $("#myPopover").popover('show');
-        setTimeout(function () {
-            $(".popover").fadeOut('slow');
-        }, 2000);
-    </script>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
