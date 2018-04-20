@@ -178,3 +178,9 @@ body {
     height: 355px;
     width: auto;
 }
+
+.panel.panel-default {
+    background-color: transparent ;
+    border: none;
+    text-align: center;
+}
