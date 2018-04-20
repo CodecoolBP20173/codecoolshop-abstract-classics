@@ -77,7 +77,7 @@ public class ShopCartServlet extends HttpServlet {
             Map.Entry<Product, Integer> pair = it.next();
             Product key = pair.getKey();
             if (button.equals("add" + key.getId())) {
-                order.increaseItemNumber(key);
+                order.addItem(key);
             } else if (button.equals("remove" + key.getId())) {
                 order.decreaseItemNumber(key, it);
             }
