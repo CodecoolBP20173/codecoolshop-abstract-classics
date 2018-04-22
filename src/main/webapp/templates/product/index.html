@@ -7,6 +7,7 @@
 
     <title>Codecool Shop</title>
 
+
     <!-- Latest compiled and minified Jquery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -25,7 +26,7 @@
             crossorigin="anonymous"></script>
 
     <script src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-
+    <script src="/static/script/index.js" defer></script>
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
     <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
@@ -41,17 +42,29 @@
             <h1 class="handWritted">Abstract Shop</h1>
         </div>
         <a class="cartlink" href="/cart">
-            <span id="myPopover" class="d-inline-block" data-toggle="popover" title="The following item was added to your cart:" data-img="/static/img/product_4.jpg" th:data-content="${popupContentName}" >
+            <div id="myPopover"  class="d-inline-block" data-toggle="popover" th:data-html="true" title="The following item was added to your cart:"  th:attr="data-content=${popupContentName}" >
                 <span class="fa-layers fa-fw fa-3x">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="fa-layers-counter"  th:text="${itemsInCart}"></span>
                 </span>
-            </span>
+            </div>
         </a>
     </div>
-
-
 </div>
+<div id="popper-content" class="hide"  >
+    <div th:each="item : ${lineItems}">
+        <div th:text="${item.value.toString() + ' ' + 'x' + '   ' + item.key.name + '               ' + 'Price: ' + item.value*item.key.getDefaultPrice()}">
+        </div>
+    </div>
+    <hr>
+    <div th:text="${'Subtotal(' + itemsInCart + ' items): ' + subTotal}">
+
+    </div>
+</div>
+
+<div id="popoverData" th:attr="data-name=${active}"></div>
+<div id="scrollPosition" th:attr="data-name=''" class="hide"></div>
+
 
 <div class="container">
     <div class="row">
@@ -111,7 +124,7 @@
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <form th:action="${#httpServletRequest.getRequestURI()}" method="post">
-                                <button type="submit" class="btn btn-success" name="add-button" th:value="${prod.id}">Add to cart</button>
+                                <button type="submit" class="btn btn-success addButton" name="add-button" th:value="${prod.id}">Add to cart</button>
                                 <input hidden name="current-uri" th:value="${#httpServletRequest.getRequestURI()} +'?' + ${#httpServletRequest.getQueryString()}" th:if="${ #httpServletRequest.getQueryString() != null}">
                                 <input hidden name="current-uri" th:value="${#httpServletRequest.getRequestURI()}" th:if="${#httpServletRequest.getQueryString() eq null}">
                             </form>
@@ -129,18 +142,6 @@
             This will be the content of the card
         </div>
     </div>
-</div>
-<div th:if="${active == 'active'}">
-    <script async>
-        $("#myPopover").popover({
-            placement: 'auto'
-        });
-
-        $("#myPopover").popover('show');
-        setTimeout(function () {
-            $(".popover").fadeOut('slow');
-        }, 2000);
-    </script>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
