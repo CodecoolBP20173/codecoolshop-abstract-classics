@@ -170,7 +170,7 @@ body {
     position: absolute;
     left: 50px;
     top: 20px;
-    width: 200px;
+    width: 160px;
     height: auto;
 }
 
@@ -183,4 +183,14 @@ body {
     background-color: transparent ;
     border: none;
     text-align: center;
+}
+
+#myPopover {
+    position: fixed;
+    z-index: 4;
+    right: 60px;
+    top: 60px;
+}
+.popover {
+    position: fixed;
 }
