@@ -28,6 +28,7 @@ public class ProductController extends HttpServlet {
 
     private int addedId = 0;
 
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
@@ -35,14 +36,21 @@ public class ProductController extends HttpServlet {
         SupplierDao productSupplierStore = SupplierDaoMem.getInstance();
         OrderDao orderDataStore = OrderDaoMem.getInstance();
 
+
         int itemsInCart;
+        Map<Product,Integer> popoverItems;
 
         if (orderDataStore.noOrderPlaced()) {
             itemsInCart = 0;
+            popoverItems = new HashMap<>();
         } else {
             Order order = orderDataStore.find(1);
             itemsInCart = order.getNumberOfItems();
+            popoverItems = order.getLineItems();
+            System.out.println(popoverItems);
         }
+
+
 
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));
@@ -57,6 +65,15 @@ public class ProductController extends HttpServlet {
         context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", productSupplierStore.getAll());
         context.setVariable("itemsInCart", itemsInCart);
+
+        int subTotal = 0;
+        for (Map.Entry<Product,Integer> p: popoverItems.entrySet()) {
+            Product key = p.getKey();
+            Integer value = p.getValue();
+
+            subTotal += (key.getDefaultPrice()*value);
+        }
+
 
 
         String queryString = req.getQueryString();
@@ -76,9 +93,14 @@ public class ProductController extends HttpServlet {
             context.setVariable("active", "active");
             context.setVariable("popupContentName", productDataStore.find(addedId).getName());
             context.setVariable("popupContentId", productDataStore.find(addedId).getId());
+
+
+
             addedId = 0;
         }
-
+        context.setVariable("lineItems", popoverItems);
+        context.setVariable("subTotal", subTotal);
+        System.out.println("get");
         engine.process("product/index.html", context, resp.getWriter());
     }
 
@@ -104,5 +126,6 @@ public class ProductController extends HttpServlet {
         addedId = productToAddId;
         String currentURI = req.getParameter("current-uri");
         resp.sendRedirect(currentURI);
+        System.out.println("post");
     }
 }
