@@ -6,7 +6,6 @@ $( document ).ready(function() {
     var cards =  document.getElementsByClassName('group list-group-image');
 
     myPopover.addEventListener('mouseenter', function () {
-        console.log('not entering');
         $(this).popover({
             placement: 'left'
         });
@@ -65,7 +64,7 @@ function moveCardToCart(elements) {
     var finalHeight = $('#myPopover').height();
     var startingPositionTop = elementToMove.offset().top - $(window).scrollTop();
     var startingPositionLeft = elementToMove.offset().left;
-    var finalPositionTop = cart.offset().top + 10 - $(window).scrollTop();
+    var finalPositionTop = cart.offset().top - 50 - $(window).scrollTop();
     var finalPositionLeft = cart.offset().left + 10;
 
 
@@ -84,7 +83,7 @@ function moveCardToCart(elements) {
                 'position': 'absolute',
                 'width': startingWidth,
                 'height': startingHeight,
-                'z-index': '100'
+                'z-index': '2'
             })
             .appendTo($('#window'))
             .animate({
@@ -105,8 +104,11 @@ function moveCardToCart(elements) {
 
 
         imgclone.animate({
-            'width': 0,
-            'height': 0
+            'width': '20px',
+            'height': '20px',
+            'top': finalPositionTop + 40,
+            'left': finalPositionLeft + 10,
+            'z-index': '0'
         }, function () {
             $(this).detach()
         });
