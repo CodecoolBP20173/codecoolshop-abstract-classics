@@ -1,4 +1,5 @@
 $(window).scrollTop(document.cookie);
+
 $( document ).ready(function() {
     var popupActivator = document.getElementById("popoverData").dataset.name;
     var myPopover = document.getElementById("myPopover");
@@ -62,15 +63,17 @@ function moveCardToCart(elements) {
     var startingHeight = elementToMove.height();
     var finalWidth = $('#myPopover').width();
     var finalHeight = $('#myPopover').height();
-    var startingPositionTop = elementToMove.offset().top;
+    var startingPositionTop = elementToMove.offset().top - $(window).scrollTop();
     var startingPositionLeft = elementToMove.offset().left;
-    var finalPositionTop = cart.offset().top + 10;
+    var finalPositionTop = cart.offset().top + 10 - $(window).scrollTop();
     var finalPositionLeft = cart.offset().left + 10;
+
 
 
     if (elementToMove) {
         var imgclone = elementToMove.clone();
         imgclone.addClass('animatedClone');
+        console.log(startingPositionTop);
         imgclone
             .offset({
                 top: startingPositionTop,
@@ -83,12 +86,13 @@ function moveCardToCart(elements) {
                 'height': startingHeight,
                 'z-index': '100'
             })
-            .appendTo($('body'))
+            .appendTo($('#window'))
             .animate({
                 'top': finalPositionTop,
                 'left': finalPositionLeft,
                 'width': finalWidth,
                 'height': finalHeight
+
             }, 1000, 'easeInOutExpo');
 
         setTimeout( function () {
