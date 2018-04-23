@@ -34,12 +34,11 @@ $( document ).ready(function() {
 
         setTimeout(function () {
             $("#myPopover").popover('show');
+            window.setTimeout(function () {
+                $(".popover").fadeOut('slow');
+            }, 2000);
         }, 1500);
 
-
-        setTimeout(function () {
-            $(".popover").fadeOut('slow');
-        }, 5000);
         document.getElementById("popoverData").dataset.name = 'passive';
     }
 
@@ -58,34 +57,48 @@ $( document ).ready(function() {
 
 function moveCardToCart(elements) {
     var cart = $('#myPopover');
-
     var elementToMove = $(getElementToMove(elements));
+    var startingWidth = elementToMove.width();
+    var startingHeight = elementToMove.height();
+    var finalWidth = $('#myPopover').width();
+    var finalHeight = $('#myPopover').height();
+    var startingPositionTop = elementToMove.offset().top;
+    var startingPositionLeft = elementToMove.offset().left;
+    var finalPositionTop = cart.offset().top + 10;
+    var finalPositionLeft = cart.offset().left + 10;
+
+
     if (elementToMove) {
-        var imgclone = elementToMove.clone()
+        var imgclone = elementToMove.clone();
+        imgclone.addClass('animatedClone');
+        imgclone
             .offset({
-                top: elementToMove.offset().top,
-                left: elementToMove.offset().left
+                top: startingPositionTop,
+                left: startingPositionLeft
             })
             .css({
                 'opacity': '1',
                 'position': 'absolute',
-                'width': elementToMove.width(),
-                'height': elementToMove.height(),
+                'width': startingWidth,
+                'height': startingHeight,
                 'z-index': '100'
             })
             .appendTo($('body'))
             .animate({
-                'top': cart.offset().top + 10,
-                'left': cart.offset().left + 10,
-                'width': $('#myPopover').width(),
-                'height': $('#myPopover').height()
+                'top': finalPositionTop,
+                'left': finalPositionLeft,
+                'width': finalWidth,
+                'height': finalHeight
             }, 1000, 'easeInOutExpo');
 
-        setTimeout(function () {
-            cart.effect("shake", {
-                times: 2
-            }, 100);
-        }, 1500);
+        setTimeout( function () {
+            $('#myPopover').addClass("animated");
+            window.setTimeout( function () {
+                $('#myPopover').removeClass("animated");
+            }, 1000);
+        }, 1000);
+
+
 
         imgclone.animate({
             'width': 0,
