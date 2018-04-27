@@ -87,14 +87,33 @@
 
 /*for prettify look*/
 body {
-    background: #eae3d5;
-    background: linear-gradient(to top, #78767a 5%,  #eae3d5 70%);
 
-    height: 100%;
-    margin: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
 }
+
+.parallax {
+    perspective: 1px;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.parallax__layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.parallax__layer--base {
+    transform: translateZ(0);
+}
+.parallax__layer--back {
+    transform: translateZ(-1px) scale(2);
+    background-image: url("../img/doodles/doodles.png");
+    height: 230%;
+    margin: 0;
+    background-repeat: repeat;
+}
+
 
 /* actual dropdown animation */
 .dropdown .dropdown-menu {
@@ -164,6 +183,7 @@ body {
 .lines {
     background-color: #5e594d;
     background-image: url("https://www.transparenttextures.com/patterns/brushed-alum.png");
+    opacity: 0.9;
 }
 
 #logo {

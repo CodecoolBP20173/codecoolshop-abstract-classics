@@ -1,4 +1,4 @@
-$(window).scrollTop(document.cookie);
+$(".parallax").scrollTop(document.cookie);
 
 $( document ).ready(function() {
     var popupActivator = document.getElementById("popoverData").dataset.name;
@@ -46,7 +46,7 @@ $( document ).ready(function() {
 
     for (var i = 0; i < addButtons.length; i++) {
         addButtons[i].addEventListener('click', function () {
-            document.cookie=$(window).scrollTop();
+            document.cookie=$(".parallax").scrollTop();
             
         })
     }
