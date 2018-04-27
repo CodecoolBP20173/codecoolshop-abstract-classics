@@ -131,8 +131,12 @@ body {
     z-index: 0;
 }
 
-
 .parallax__layer--deep {
+    transform: translateZ(-2px) scale(3);
+    z-index: -50;
+}
+
+.parallax__layer--deepest {
     transform: translateZ(-3px) scale(4);
     z-index: -100;
 }
@@ -190,8 +194,16 @@ body {
 
 .handWritted {
     /*font-family: 'Tangerine', serif;*/
+    font-size: 45px !important;
+    position: absolute;
+    top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 200px;
+    height: auto;
     font-family: 'Berkshire Swash', cursive;
-    font-size: 70px;
     text-shadow: 4px 4px 4px #aaa;
 }
 
@@ -205,17 +217,19 @@ body {
 }
 
 .lines {
-    background-color: #7e7819;
-    background-image: url("../img/doodles/2270.jpg");
+    background-color: #a0a29b;
+    background-image: url("../img/doodles/brick-wall-dark.png");
     opacity: 1;
     height: 200%;
 }
 
 #logo {
     position: absolute;
-    left: 50px;
-    top: 20px;
-    width: 160px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 300px;
     height: auto;
 }
 
