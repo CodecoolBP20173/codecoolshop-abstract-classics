@@ -91,7 +91,7 @@ body {
 }
 
 .parallax {
-    perspective: 1px;
+    perspective: 1.01px;
     height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
@@ -105,21 +105,23 @@ body {
 }
 .parallax__layer--base {
     transform: translateZ(0);
-    top: 300px;
+    top: 1500px;
+    height: 200%;
     z-index: 1;
+    margin-bottom: 1500px;
 }
 .parallax__layer--back {
-    top: 300px;
+    top: 1800px;
     transform: translateZ(-1px) scale(2);
     background-image: url("../img/doodles/wood.jpg");
-    height: 300px;
+    height: 1200px;
     margin: 0;
     background-repeat: repeat;
     color: #9ea300;
     opacity: 1;
     z-index: 0;
 }
-.parallax__layer--back_second {
+/*.parallax__layer--back_second {
     top: 1500px;
     transform: translateZ(-1px) scale(2);
     background-image: url("../img/doodles/wood.jpg");
@@ -129,16 +131,18 @@ body {
     color: #9ea300;
     opacity: 1;
     z-index: 0;
-}
+}*/
 
 .parallax__layer--deep {
     transform: translateZ(-2px) scale(3);
     z-index: -50;
+    text-align: center;
 }
 
 .parallax__layer--deepest {
     transform: translateZ(-3px) scale(4);
     z-index: -100;
+    height: 105%;
 }
 
 /* actual dropdown animation */
@@ -194,14 +198,28 @@ body {
 
 .handWritted {
     /*font-family: 'Tangerine', serif;*/
-    font-size: 45px !important;
+    font-size: 100px !important;
     position: absolute;
-    top: 100px;
+    top: 330px;
     margin-left: auto;
     margin-right: auto;
     left: 0;
     right: 0;
-    width: 200px;
+    width: 400px;
+    height: auto;
+    font-family: 'Berkshire Swash', cursive;
+    text-shadow: 4px 4px 4px #aaa;
+}
+.handWrittedBottom {
+    /*font-family: 'Tangerine', serif;*/
+    font-size: 100px !important;
+    position: absolute;
+    top: 1330px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 400px;
     height: auto;
     font-family: 'Berkshire Swash', cursive;
     text-shadow: 4px 4px 4px #aaa;
@@ -229,8 +247,19 @@ body {
     margin-right: auto;
     left: 0;
     right: 0;
-    width: 300px;
+    width: 800px;
     height: auto;
+}
+
+#logoBottom {
+    position: relative;
+    top: 1400px;
+
+    width: 800px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 .group.list-group-image {
