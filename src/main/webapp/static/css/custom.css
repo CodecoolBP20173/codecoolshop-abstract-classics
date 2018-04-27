@@ -108,12 +108,12 @@ body {
 }
 .parallax__layer--back {
     transform: translateZ(-1px) scale(2);
-    background-image: url("../img/doodles/doodles.png");
+    background-image: url("../img/doodles/brick-wall-dark.png");
     height: 230%;
     margin: 0;
     background-repeat: repeat;
+    color: #9ea300;
 }
-
 
 /* actual dropdown animation */
 .dropdown .dropdown-menu {
