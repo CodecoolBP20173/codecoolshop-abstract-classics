@@ -78,7 +78,8 @@
 .cartlink
 {
     text-decoration: none;
-    color: green;
+    color: black;
+
 }
 .cartlink:hover
 {
@@ -117,7 +118,6 @@ body {
     height: 1200px;
     margin: 0;
     background-repeat: repeat;
-    color: #9ea300;
     opacity: 1;
     z-index: 0;
 }
@@ -274,6 +274,7 @@ body {
 }
 
 #myPopover {
+    color: white;
     position: fixed;
     z-index: 4;
     right: 80px;

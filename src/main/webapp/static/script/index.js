@@ -43,6 +43,7 @@ $( document ).ready(function() {
     }
 
     var addButtons = document.getElementsByClassName('btn btn-success addButton');
+    var catButtons = document.getElementsByClassName('btn btn-default');
 
     for (var i = 0; i < addButtons.length; i++) {
         addButtons[i].addEventListener('click', function () {
@@ -50,6 +51,13 @@ $( document ).ready(function() {
             
         })
     }
+    for (var i = 0; i < catButtons.length; i++) {
+        catButtons[i].addEventListener('click', function () {
+            document.cookie=$(".parallax").scrollTop();
+
+        })
+    }
+
     
 
 });
