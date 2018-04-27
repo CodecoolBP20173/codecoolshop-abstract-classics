@@ -118,10 +118,12 @@ function moveCardToCart(elements) {
 
 function getElementToMove(elements) {
     console.log(document.getElementById('popupContentId').dataset.id);
-    var elementId =  parseInt(document.getElementById('popupContentId').dataset.id);
-    for (var i = 0; i < elements.length; i++) {
-        if (elementId - 1  === i) {
-            return elements[i];
+    var elementId =  document.getElementById('popupContentId').dataset.id;
+    for (let i = 0; i < elements.length; i++) {
+        let element = elements[i];
+        let elementToMoveId = element.getAttribute('src').charAt(element.getAttribute('src').length - 5);
+        if (elementId === elementToMoveId) {
+            return element;
         }
     }
 }
