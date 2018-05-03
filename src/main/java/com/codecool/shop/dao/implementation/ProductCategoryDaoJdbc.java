@@ -3,7 +3,6 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.config.ConnectionManager;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 public class ProductCategoryDaoJdbc implements ProductCategoryDao {
     private static ProductCategoryDaoJdbc instance;
@@ -34,7 +33,17 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
 
     @Override
     public void add(ProductCategory productCategory) {
-        String query = "SELECT * FROM product_category WHERE id=?;";
+        String query = "INSERT INTO product_category (name, description, department) VALUES (?, ?, ?);";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(query);
+            preparedStatement.setString(1, productCategory.getName());
+            preparedStatement.setString(2, productCategory.getDescription());
+            preparedStatement.setString(3, productCategory.getDepartment());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
