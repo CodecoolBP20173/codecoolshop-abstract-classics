@@ -4,13 +4,10 @@ import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.OrderDaoMem;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -31,9 +28,9 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao productSupplierStore = SupplierDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoJdbc.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
+        SupplierDao productSupplierStore = SupplierDaoJdbc.getInstance();
         OrderDao orderDataStore = OrderDaoMem.getInstance();
 
 
@@ -106,7 +103,7 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoJdbc.getInstance();
         int productToAddId = Integer.valueOf(req.getParameter("add-button"));
 
         OrderDao orderDataStore = OrderDaoMem.getInstance();
