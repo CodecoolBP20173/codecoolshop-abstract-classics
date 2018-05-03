@@ -4,17 +4,14 @@ import com.codecool.shop.config.ConnectionManager;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierDaoJdbc implements SupplierDao {
 
     private static SupplierDaoJdbc instance;
-    Connection connection;
+    private Connection connection;
 
     private SupplierDaoJdbc() {
         try {
@@ -40,6 +37,7 @@ public class SupplierDaoJdbc implements SupplierDao {
             preparedStatement.setString(1, supplier.getName());
             preparedStatement.setString(2, supplier.getDescription());
             preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -60,10 +58,13 @@ public class SupplierDaoJdbc implements SupplierDao {
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 supplier = new Supplier(name, description);
+                supplier.setId(rs.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
         return supplier;
     }
 
@@ -95,6 +96,7 @@ public class SupplierDaoJdbc implements SupplierDao {
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 Supplier supplier = new Supplier(name, description);
+                supplier.setId(rs.getInt("id"));
                 data.add(supplier);
             }
         } catch (SQLException e) {
