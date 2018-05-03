@@ -5,16 +5,16 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
-public class Connection {
+public class ConnectionManager {
 
-    private static Connection instance = null;
+    private static ConnectionManager instance = null;
 
-    private Connection() {
+    private ConnectionManager() {
     }
 
-    public static Connection getInstance() {
+    public static ConnectionManager getInstance() {
         if(instance == null) {
-            instance = new Connection();
+            instance = new ConnectionManager();
         }
         return instance;
     }
