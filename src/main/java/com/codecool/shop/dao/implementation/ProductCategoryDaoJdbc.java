@@ -60,6 +60,7 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
                 String description = rs.getString("description");
                 String department = rs.getString("department");
                 productCategory = new ProductCategory(name, department, description);
+                productCategory.setId(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,10 +93,12 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
+                Integer id = rs.getInt("id");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 String department = rs.getString("department");
                 ProductCategory productCategory = new ProductCategory(name, department, description);
+                productCategory.setId(id);
                 data.add(productCategory);
             }
         } catch (SQLException e) {
