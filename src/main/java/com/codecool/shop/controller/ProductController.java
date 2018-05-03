@@ -23,7 +23,7 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/","/*"})
 public class ProductController extends HttpServlet {
 
-    private int addedId = 0;
+    private int addedId = -1;
 
 
     @Override
@@ -86,14 +86,14 @@ public class ProductController extends HttpServlet {
             context.setVariable("products", productDataStore.getAll());
         }
         context.setVariable("active", "passive");
-        if (addedId != 0) {
+        if (addedId != -1) {
             context.setVariable("active", "active");
             context.setVariable("popupContentName", productDataStore.find(addedId).getName());
             context.setVariable("popupContentId", productDataStore.find(addedId).getId());
 
 
 
-            addedId = 0;
+            addedId = -1;
         }
         context.setVariable("lineItems", popoverItems);
         context.setVariable("subTotal", subTotal);
