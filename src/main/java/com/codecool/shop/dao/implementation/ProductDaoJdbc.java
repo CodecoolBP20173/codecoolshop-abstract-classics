@@ -77,6 +77,7 @@ public class ProductDaoJdbc  implements ProductDao{
                 Supplier supplier = SupplierDaoJdbc.getInstance().find(rs.getInt("supplier_id"));
                 String productImageUrl = rs.getString("product_image");
                 product = new Product(name, defaultPrice, currency, description, productCategory, supplier);
+                product.setId(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,6 +110,7 @@ public class ProductDaoJdbc  implements ProductDao{
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 float defaultPrice = rs.getFloat("default_price");
@@ -116,6 +118,7 @@ public class ProductDaoJdbc  implements ProductDao{
                 ProductCategory productCategory = ProductCategoryDaoJdbc.getInstance().find(rs.getInt("product_category_id"));
                 Supplier supplier = SupplierDaoJdbc.getInstance().find(rs.getInt("supplier_id"));
                 Product product = new Product(name, defaultPrice, currency, description, productCategory, supplier);
+                product.setId(id);
                 data.add(product);
             }
         } catch (SQLException e) {
@@ -185,6 +188,24 @@ public class ProductDaoJdbc  implements ProductDao{
         return data;
     }
 
+    public int getNumberOfProducts() {
+        String query = "SELECT COUNT(id) AS productCount FROM product;";
 
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()){
+                return resultSet.getInt("productCount");
+            } else {
+                return 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 
 }
