@@ -45,7 +45,7 @@ class SupplierDaoJdbcTest {
 
     @Test
     void testGetInstance() {
-        assertNotNull(SupplierDaoJdbc.getInstance());
+        assertNotNull(SupplierDaoJdbc.getTestInstance(connection));
     }
 
     @Test
@@ -127,7 +127,7 @@ class SupplierDaoJdbcTest {
 
             while (rs.next()) {
                 int lastId = rs.getInt("id");
-                SupplierDaoJdbc.getInstance().remove(lastId);
+                SupplierDaoJdbc.getTestInstance(connection).remove(lastId);
             }
 
             preparedStatementCountRow =
