@@ -11,7 +11,7 @@ import java.util.List;
 public class SupplierDaoJdbc implements SupplierDao {
 
     private static SupplierDaoJdbc instance;
-    private Connection connection;
+    private static Connection connection;
 
     private SupplierDaoJdbc() {
         try {
@@ -24,6 +24,14 @@ public class SupplierDaoJdbc implements SupplierDao {
     public static SupplierDaoJdbc getInstance() {
         if (instance == null) {
             instance = new SupplierDaoJdbc();
+        }
+        return instance;
+    }
+
+    public static SupplierDaoJdbc getTestInstance(Connection conn) {
+        if (instance == null) {
+            instance = new SupplierDaoJdbc();
+            connection = conn;
         }
         return instance;
     }
