@@ -4,6 +4,8 @@ import com.codecool.shop.model.Supplier;
 import org.junit.jupiter.api.Test;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -106,7 +108,6 @@ class SupplierDaoJdbcTest {
 
             while (rs.next()) {
                 afterAdding = rs.getInt("row_number");
-                System.err.println(afterAdding + " " + beforeAdding);
             }
 
             assertEquals(0, (afterAdding - beforeAdding));
@@ -117,7 +118,19 @@ class SupplierDaoJdbcTest {
     }
 
     @Test
-    void testGetAllMethod() {
+    void testGetAllMethodNotNull() {
+        Supplier testSupplier = new Supplier("GetAll Co", "We will get all the things what you desire.");
+        SupplierDaoJdbc.getInstance().add(testSupplier);
 
+        assertNotNull(SupplierDaoJdbc.getInstance().getAll());
+    }
+
+    @Test
+    void testGetAllMethod() {
+        Supplier testSupplier = new Supplier("GetAll Co", "We will get all the things what you desire.");
+        SupplierDaoJdbc.getInstance().add(testSupplier);
+
+        List<Supplier> supplierList = SupplierDaoJdbc.getInstance().getAll();
+        assertEquals("GetAll Co",supplierList.get(supplierList.size()-1).getName());
     }
 }
