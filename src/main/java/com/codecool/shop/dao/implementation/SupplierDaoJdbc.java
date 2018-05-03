@@ -13,9 +13,8 @@ import java.util.List;
 
 public class SupplierDaoJdbc implements SupplierDao {
 
-    private List<Supplier> data = new ArrayList<>();
     private static SupplierDaoJdbc instance;
-     Connection connection;
+    Connection connection;
 
     private SupplierDaoJdbc() {
         try {
@@ -42,6 +41,7 @@ public class SupplierDaoJdbc implements SupplierDao {
         Supplier supplier = null;
 
         String query = "SELECT * FROM supplier WHERE id=?;";
+
         try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(query);
@@ -73,10 +73,9 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     @Override
     public List<Supplier> getAll() {
-
-        Supplier supplier = null;
-
+        List<Supplier> data = new ArrayList<>();
         String query = "SELECT * FROM supplier;";
+
         try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(query);
@@ -86,7 +85,7 @@ public class SupplierDaoJdbc implements SupplierDao {
             while (rs.next()) {
                 String name = rs.getString("name");
                 String description = rs.getString("description");
-                supplier = new Supplier(name, description);
+                Supplier supplier = new Supplier(name, description);
                 data.add(supplier);
             }
         } catch (SQLException e) {
