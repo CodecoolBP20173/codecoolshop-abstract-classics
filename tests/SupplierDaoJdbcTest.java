@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SupplierDaoJdbcTest {
 
@@ -59,8 +60,7 @@ class SupplierDaoJdbcTest {
                 row_number = rs.getInt("row_number");
             }
 
-            if (row_number > 0)
-            {
+            if (row_number > 0) {
                 assertEquals(Supplier.class, SupplierDaoJdbc.getInstance().find(1).getClass());
             }
 
@@ -80,65 +80,44 @@ class SupplierDaoJdbcTest {
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
 
-            PreparedStatement preparedStatementCountRow =
-                    connection.prepareStatement(queryCountRows);
+            PreparedStatement preparedStatementCountRow = connection.prepareStatement(queryCountRows);
 
             ResultSet rs = preparedStatementCountRow.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 beforeAdding = rs.getInt("row_number");
             }
 
             Supplier testSupplier = new Supplier("Monsters Co", "A lot of monsters");
             SupplierDaoJdbc.getInstance().add(testSupplier);
 
-
-      /*      PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.executeUpdate();
-
-            String querySelectAll = "SELECT * FROM supplier;";
-            preparedStatement =
-                    connection.prepareStatement(querySelectAll);
-            rs = preparedStatement.executeQuery();
-
-            while(rs.next()) {
-                if (rs.isLast()) SupplierDaoJdbc.getInstance().remove(rs.getInt("id"));
-            }*/
-
             Statement stmt = connection.createStatement();
             String selectQuery = "SELECT id FROM supplier WHERE id= (select max(id) from supplier);";
             rs = stmt.executeQuery(selectQuery);
 
-            while(rs.next()) {
+            while (rs.next()) {
                 int lastId = rs.getInt("id");
                 SupplierDaoJdbc.getInstance().remove(lastId);
             }
-
-
-
-
-
 
             preparedStatementCountRow =
                     connection.prepareStatement(queryCountRows);
             rs = preparedStatementCountRow.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 afterAdding = rs.getInt("row_number");
                 System.err.println(afterAdding + " " + beforeAdding);
             }
 
-            assertEquals(0, (afterAdding-beforeAdding));
+            assertEquals(0, (afterAdding - beforeAdding));
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
     @Test
     void testGetAllMethod() {
+
     }
 }
