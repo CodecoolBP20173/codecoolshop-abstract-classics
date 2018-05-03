@@ -16,8 +16,14 @@ DROP SEQUENCE IF EXISTS product_category_id_seq;
 DROP SEQUENCE IF EXISTS orders_id_seq;
 
 
+CREATE SEQUENCE product_id_seq
+  START WITH 0
+  INCREMENT BY 1
+  MINVALUE 0
+  NO MAXVALUE;
+
 CREATE TABLE product (
-    id INTEGER NOT NULL,
+    id INTEGER NOT NULL DEFAULT nextval('product_id_seq'::regclass),
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     default_price FLOAT NOT NULL,
@@ -27,51 +33,50 @@ CREATE TABLE product (
     product_image VARCHAR(255) NOT NULL
 );
 
-CREATE SEQUENCE product_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE;
 
-ALTER TABLE product ALTER COLUMN id SET DEFAULT nextval('product_id_seq'::regclass);
+
 ALTER TABLE product ADD CONSTRAINT pk_product_id PRIMARY KEY (id);
 
+CREATE SEQUENCE supplier_id_seq
+  START WITH 0
+  INCREMENT BY 1
+  MINVALUE 0
+  NO MAXVALUE;
 
 CREATE TABLE supplier (
-    id INTEGER NOT NULL,
+    id INTEGER NOT NULL DEFAULT nextval('supplier_id_seq'::regclass),
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL
+
 );
 
-CREATE SEQUENCE supplier_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE;
 
-ALTER TABLE supplier ALTER COLUMN id SET DEFAULT nextval('supplier_id_seq'::regclass);
 ALTER TABLE supplier ADD CONSTRAINT pk_supplier_id PRIMARY KEY (id);
 
+CREATE SEQUENCE product_category_id_seq
+  START WITH 0
+  INCREMENT BY 1
+  MINVALUE 0
+  NO MAXVALUE;
 
 CREATE TABLE product_category (
-    id INTEGER NOT NULL,
+    id INTEGER NOT NULL DEFAULT nextval('product_category_id_seq'::regclass),
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     department VARCHAR(255) NOT NULL
 );
 
-CREATE SEQUENCE product_category_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE;
 
-ALTER TABLE product_category ALTER COLUMN id SET DEFAULT nextval('product_category_id_seq'::regclass);
 ALTER TABLE product_category ADD CONSTRAINT pk_product_category_id PRIMARY KEY (id);
 
+CREATE SEQUENCE orders_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MINVALUE
+  NO MAXVALUE;
 
 CREATE TABLE orders (
-    id INTEGER NOT NULL,
+    id INTEGER NOT NULL DEFAULT nextval('product_category_id_seq'::regclass),
     name VARCHAR(255),
     description VARCHAR(255),
     email VARCHAR(255),
@@ -82,13 +87,7 @@ CREATE TABLE orders (
 );
 
 
-CREATE SEQUENCE orders_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE;
 
-ALTER TABLE orders ALTER COLUMN id SET DEFAULT nextval('orders_id_seq'::regclass);
 ALTER TABLE orders ADD CONSTRAINT pk_orders_id PRIMARY KEY (id);
 
 

@@ -86,7 +86,6 @@ class SupplierDaoJdbcTest {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-                    //ConnectionManager.getInstance().getConnection().prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -111,8 +110,6 @@ class SupplierDaoJdbcTest {
         int beforeAdding = 0;
 
         try {
-            //Connection connection = ConnectionManager.getInstance().getConnection();
-
             PreparedStatement preparedStatementCountRow = connection.prepareStatement(queryCountRows);
 
             ResultSet rs = preparedStatementCountRow.executeQuery();

@@ -66,7 +66,7 @@ public class SupplierDaoJdbc implements SupplierDao {
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 supplier = new Supplier(name, description);
-                supplier.setId(rs.getInt("id"));
+                supplier.setId(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,10 +102,11 @@ public class SupplierDaoJdbc implements SupplierDao {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
+                Integer id = rs.getInt("id");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 Supplier supplier = new Supplier(name, description);
-                supplier.setId(rs.getInt("id"));
+                supplier.setId(id);
                 data.add(supplier);
             }
         } catch (SQLException e) {
