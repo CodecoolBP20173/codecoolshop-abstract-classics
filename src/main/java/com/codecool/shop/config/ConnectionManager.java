@@ -22,6 +22,15 @@ public class ConnectionManager {
     private Properties loadPropertiesFile() throws Exception {
         Properties prop = new Properties();
         InputStream in = new FileInputStream("src/main/resources/jdbc.properties");
+
+        prop.load(in);
+        in.close();
+        return prop;
+    }
+
+    private Properties loadTestPropertiesFile() throws Exception {
+        Properties prop = new Properties();
+        InputStream in = new FileInputStream("src/main/resources/jdbc_test.properties");
         prop.load(in);
         in.close();
         return prop;
@@ -31,6 +40,20 @@ public class ConnectionManager {
         Properties prop = null;
         try {
             prop = loadPropertiesFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return DriverManager.getConnection(
+                prop.getProperty("url"),
+                prop.getProperty("username"),
+                prop.getProperty("password"));
+    }
+
+    public java.sql.Connection getTestConnection() throws SQLException {
+        Properties prop = null;
+        try {
+            prop = loadTestPropertiesFile();
         } catch (Exception e) {
             e.printStackTrace();
         }
