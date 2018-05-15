@@ -9,6 +9,16 @@ public class User {
     private String billingAddress;
     private String shippingAddress;
 
+    public User(String name, String password, int phoneNumber, String email,
+                String billingAddress, String shippingAddress) {
+        this.name = name;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
+    }
+
     public int getId() {
         return id;
     }
