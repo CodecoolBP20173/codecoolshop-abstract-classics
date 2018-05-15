@@ -86,7 +86,7 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public void remove(int id) {
-        /*String query = "DELETE FROM supplier WHERE id=?;";
+        String query = "DELETE FROM users WHERE id=?;";
 
         try {
             PreparedStatement preparedStatement =
@@ -95,7 +95,7 @@ public class UserDaoJdbc implements UserDao {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     @Override
