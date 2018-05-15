@@ -100,8 +100,8 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public List<User> getAll() {
-        /*List<Supplier> data = new ArrayList<>();
-        String query = "SELECT * FROM supplier;";
+        List<User> data = new ArrayList<>();
+        String query = "SELECT * FROM users;";
 
         try {
             PreparedStatement preparedStatement =
@@ -112,17 +112,21 @@ public class UserDaoJdbc implements UserDao {
             while (rs.next()) {
                 Integer id = rs.getInt("id");
                 String name = rs.getString("name");
-                String description = rs.getString("description");
-                Supplier supplier = new Supplier(name, description);
-                supplier.setId(id);
-                data.add(supplier);
+                String password = rs.getString("password");
+                String email = rs.getString("email");
+                int phone = rs.getInt("phone_number");
+                String billingAddress = rs.getString("billing_address");
+                String shippingAddress = rs.getString("shipping_address");
+
+                User user = new User(name, password, phone, email, billingAddress, shippingAddress);
+                user.setId(id);
+                data.add(user);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return data;*/
-        return null;
+        return data;
     }
 
 }
