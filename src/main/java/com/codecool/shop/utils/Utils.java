@@ -18,7 +18,7 @@ public class Utils {
      * @param plainText (String): text for hashing with salt
      * @return hashed text (String)
      */
-    public String hashPassword(String plainText) {
+    public static String hashPassword(String plainText) {
         return BCrypt.hashpw(plainText, BCrypt.gensalt(12));
     }
 
@@ -28,7 +28,7 @@ public class Utils {
      * @param hashedPassword (String): hashed text
      * @return true or false
      */
-    public Boolean checkPasswords(String plainTextPassword, String hashedPassword) {
+    public static Boolean checkPasswords(String plainTextPassword, String hashedPassword) {
         return BCrypt.checkpw(plainTextPassword, hashedPassword);
     }
 }
