@@ -279,4 +279,18 @@ public class OrderDaoJdbc implements OrderDao {
             }
         }
     }
+
+    public void removeOrderProduct(Order order, Product product) {
+        String orderProductsQuery = "DELETE FROM order_products WHERE order_id = ? AND product_id = ?;";
+
+        try {
+            PreparedStatement orderProductsStatement = connection.prepareStatement(orderProductsQuery);
+            orderProductsStatement.setInt(1, order.getId());
+            orderProductsStatement.setInt(2, product.getId());
+            orderProductsStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
