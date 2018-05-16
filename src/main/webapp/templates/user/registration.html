@@ -32,13 +32,33 @@
     <form class="form-horizontal" action="/" method="post">
         <img class="mb-4" src="" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <br>
+        <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Name"
+               required="required" th:attrappend="value=${name != ''} ? ${name}" autofocus>
+        <br>
+
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="Email address"
-               required="required" th:attrappend="value=${email != ''} ? ${email}" autofocus>
+               required="required" th:attrappend="value=${email != ''} ? ${email}">
         <br>
 
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <br>
+
+        <label for="inputPhone" class="sr-only">Phone</label>
+        <input class="form-control" id="inputPhone" name="inputPhone" placeholder="Enter your phone number (3620456123)"
+                   required="required" pattern="\d*" maxlength="15" th:attrappend="value=${phone != ''} ? ${phone}">
+        <br>
+
+        <label for="inputShippingAddress" class="sr-only">Shipping Address</label>
+        <input type="text" class="form-control" id="inputShippingAddress" name="inputShippingAddress" placeholder="Shipping address"
+                   required="required" th:attrappend="value=${shippingAddress != ''} ? ${shippingAddress}">
+        <br>
+
+        <label for="inputBillingAddress" class="sr-only">Billing Address</label>
+        <input type="text" class="form-control" id="inputBillingAddress" name="inputBillingAddress" placeholder="Billing address"
+               required="required" th:attrappend="value=${shippingAddress != ''} ? ${shippingAddress}">
 
         <div class="checkbox">
             <label>
