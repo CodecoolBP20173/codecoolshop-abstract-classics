@@ -81,6 +81,44 @@ public class OrderDaoJdbc implements OrderDao {
 
     @Override
     public Order find(int id) {
+        String orderQuery = "SELECT * FROM orders WHERE id = ?;";
+
+        String orderProductsQuery = "SELECT * FROM order_products WHERE order_id = ?;";
+
+        try {
+            Map<Integer, Integer> orderProducts = new HashMap<>();
+            PreparedStatement orderStatement = connection.prepareStatement(orderQuery);
+            orderStatement.setInt(1, id);
+            ResultSet orderResultSet = orderStatement.executeQuery();
+
+            if (orderResultSet.next()) {
+                Order order = setOrderObject(orderResultSet);
+                PreparedStatement orderProductStatement = connection.prepareStatement(orderProductsQuery);
+                orderProductStatement.setInt(1, id);
+                ResultSet orderProductsResultSet = orderProductStatement.executeQuery();
+
+                while(orderProductsResultSet.next()) {
+                    int productId = orderProductsResultSet.getInt("product_id");
+                    int quantity = orderProductsResultSet.getInt("quantity");
+
+                    orderProducts.put(productId, quantity);
+                }
+
+                for (Map.Entry<Integer,Integer> products: orderProducts.entrySet()) {
+                    Integer productId = products.getKey();
+                    Integer quantity = products.getValue();
+
+                    for (int i = 0; i < quantity; i++) {
+                        order.addItem(productId);
+                    }
+                }
+                return order;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
@@ -116,5 +154,26 @@ public class OrderDaoJdbc implements OrderDao {
     @Override
     public boolean noOrderPlaced() {
         return getNumberOfOrders() == 0;
+    }
+
+    private Order setOrderObject(ResultSet resultSet) {
+        try {
+            String orderName = "Order-" + (resultSet.getInt("id"));
+            Order order = new Order(orderName);
+            order.setId(resultSet.getInt("id"));
+            order.setDescription(resultSet.getString("description"));
+            order.setCustomerName(resultSet.getString("name"));
+            order.setCustomerEmail(resultSet.getString("email"));
+            order.setCustomerPhone(resultSet.getString("phone"));
+            order.setCustomerBillingAddress(resultSet.getString("billing_address"));
+            order.setCustomerShippingAddress(resultSet.getString("shipping_address"));
+            order.setCustomerPaymentMethod(resultSet.getString("payment_method"));
+
+            return order;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
