@@ -233,4 +233,50 @@ public class OrderDaoJdbc implements OrderDao {
         }
         return null;
     }
+
+    public void updateOrderProducts(Order order, Product product) {
+        List<Integer> productIds = new ArrayList<>();
+
+        String productIdsQuery = "SELECT product_id FROM order_products WHERE order_id = ?";
+
+        try {
+            PreparedStatement productIdsStatement = connection.prepareStatement(productIdsQuery);
+            productIdsStatement.setInt(1, order.getId());
+            ResultSet resultSet = productIdsStatement.executeQuery();
+
+            while (resultSet.next()) {
+                productIds.add(resultSet.getInt("product_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (productIds.contains(product.getId())) {
+            String orderProductsQuery = "UPDATE order_products SET quantity = ? WHERE order_id = ? AND product_id = ?";
+            try {
+                PreparedStatement orderProductsStatement = connection.prepareStatement(orderProductsQuery);
+                int newQuantity = order.getLineItems().get(product.getId());
+                orderProductsStatement.setInt(1, newQuantity);
+                orderProductsStatement.setInt(2, order.getId());
+                orderProductsStatement.setInt(3, product.getId());
+                orderProductsStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            String orderProductsQuery = "INSERT INTO order_products (order_id, product_id, quantity) VALUES (?, ?, ?);";
+
+            try {
+                PreparedStatement orderProductsStatement = connection.prepareStatement(orderProductsQuery);
+                orderProductsStatement.setInt(1, order.getId());
+                orderProductsStatement.setInt(2, product.getId());
+                orderProductsStatement.setInt(3, 1);
+                orderProductsStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
