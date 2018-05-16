@@ -129,7 +129,46 @@ public class OrderDaoJdbc implements OrderDao {
 
     @Override
     public List<Order> getAll() {
-        return null;
+        String ordersQuery = "SELECT * FROM orders;";
+        List<Order> orders = new ArrayList<>();
+
+        try {
+            PreparedStatement orderStatement = connection.prepareStatement(ordersQuery);
+            ResultSet orderResultSet = orderStatement.executeQuery();
+
+            while(orderResultSet.next()) {
+                Map<Integer, Integer> orderProducts = new HashMap<>();
+                Order order = setOrderObject(orderResultSet);
+
+                String orderProductsQuery = "SELECT * FROM order_products WHERE order_id = ?;";
+                PreparedStatement orderProductsStatement = connection.prepareStatement(orderProductsQuery);
+                orderProductsStatement.setInt(1, order.getId());
+                ResultSet orderProductsResultSet = orderStatement.executeQuery();
+
+                while(orderProductsResultSet.next()) {
+                    int productId = orderProductsResultSet.getInt("product_id");
+                    int quantity = orderProductsResultSet.getInt("quantity");
+
+                    orderProducts.put(productId, quantity);
+                }
+
+                for (Map.Entry<Integer,Integer> products: orderProducts.entrySet()) {
+                    Integer productId = products.getKey();
+                    Integer quantity = products.getValue();
+
+                    for (int i = 0; i < quantity; i++) {
+                        order.addItem(productId);
+                    }
+                }
+
+                orderProductsResultSet.beforeFirst();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return orders;
     }
 
     @Override
