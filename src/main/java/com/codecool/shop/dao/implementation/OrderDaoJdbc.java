@@ -293,4 +293,18 @@ public class OrderDaoJdbc implements OrderDao {
             e.printStackTrace();
         }
     }
+
+    public void updateOrderCustomerDataField(Order order, String fieldName, String newValue) {
+        String orderUpdateQuery = "UPDATE orders SET fieldName=?, WHERE id=?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(orderUpdateQuery);
+            statement.setString(1, newValue);
+            statement.setInt(2, order.getId());
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
