@@ -3,6 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.OrderDaoJdbc;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoJdbc;
 import com.codecool.shop.model.Order;
@@ -23,7 +24,7 @@ import java.util.Map;
 public class PaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoJdbc.getInstance();
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
         Map<Integer,Integer> orderLineItems;
         Map<Product,Integer> shoppingItems = new HashMap<>();
@@ -58,8 +59,8 @@ public class PaymentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OrderDaoMem orderDaoMem = OrderDaoMem.getInstance();
-        orderDaoMem.remove(1);
+        OrderDao orderDataStore = OrderDaoJdbc.getInstance();
+        orderDataStore.remove(1);
 
         resp.sendRedirect("/");
     }

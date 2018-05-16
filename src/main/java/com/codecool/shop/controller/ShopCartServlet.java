@@ -3,6 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.OrderDaoJdbc;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoJdbc;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
@@ -27,7 +28,7 @@ public class ShopCartServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoJdbc.getInstance();
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
 
         Order order = orderDataStore.find(1);
@@ -55,7 +56,7 @@ public class ShopCartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoJdbc.getInstance();
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
         Map<Integer,Integer> orderLineItems;
         Map<Product,Integer> shoppingItems = new HashMap<>();
@@ -88,7 +89,7 @@ public class ShopCartServlet extends HttpServlet {
     }
 
     private void removeAddCart(String button) {
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoJdbc.getInstance();
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
         Order order = orderDataStore.find(1);
 
@@ -97,9 +98,18 @@ public class ShopCartServlet extends HttpServlet {
             Map.Entry<Integer, Integer> pair = it.next();
             Integer key = pair.getKey();
             if (button.equals("add" + key)) {
+                Product productToAdd = productDataStore.find(key);
                 order.addItem(key);
+                ((OrderDaoJdbc) orderDataStore).updateOrderProducts(order, productToAdd);
             } else if (button.equals("remove" + key)) {
+                Product productToRemove = productDataStore.find(key);
                 order.decreaseItemNumber(key, it);
+
+                if (order.getLineItems().get(productToRemove.getId()) == null) {
+                    ((OrderDaoJdbc) orderDataStore).removeOrderProduct(order, productToRemove);
+                } else {
+                    ((OrderDaoJdbc) orderDataStore).updateOrderProducts(order, productToRemove);
+                }
             }
         }
 

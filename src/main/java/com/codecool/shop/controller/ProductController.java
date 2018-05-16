@@ -31,7 +31,7 @@ public class ProductController extends HttpServlet {
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
         SupplierDao productSupplierStore = SupplierDaoJdbc.getInstance();
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoJdbc.getInstance();
 
 
         int itemsInCart;
@@ -113,7 +113,7 @@ public class ProductController extends HttpServlet {
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
         int productToAddId = Integer.valueOf(req.getParameter("add-button"));
 
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoJdbc.getInstance();
 
         if (orderDataStore.noOrderPlaced()) {
 
@@ -127,6 +127,7 @@ public class ProductController extends HttpServlet {
             Order order = orderDataStore.find(1);
             Product productToAdd = productDataStore.find(productToAddId);
             order.addItem(productToAddId);
+            ((OrderDaoJdbc) orderDataStore).updateOrderProducts(order, productToAdd);
         }
         addedId = productToAddId;
         String currentURI = req.getParameter("current-uri");

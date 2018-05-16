@@ -294,13 +294,18 @@ public class OrderDaoJdbc implements OrderDao {
         }
     }
 
-    public void updateOrderCustomerDataField(Order order, String fieldName, String newValue) {
-        String orderUpdateQuery = "UPDATE orders SET fieldName=?, WHERE id=?";
+    public void updateOrderAfterCheckout(Order order) {
+        String orderUpdateQuery = "UPDATE orders SET name=?, email=?, phone=?, billing_address=?, shipping_address=?, payment_method=? WHERE id=?";
 
         try {
             PreparedStatement statement = connection.prepareStatement(orderUpdateQuery);
-            statement.setString(1, newValue);
-            statement.setInt(2, order.getId());
+            statement.setString(1, order.getCustomerName());
+            statement.setString(2, order.getCustomerEmail());
+            statement.setString(3, order.getCustomerPhone());
+            statement.setString(4, order.getCustomerBillingAddress());
+            statement.setString(5, order.getCustomerShippingAddress());
+            statement.setString(6, order.getCustomerPaymentMethod());
+            statement.setInt(7, order.getId());
             statement.executeUpdate();
 
         } catch (SQLException e) {

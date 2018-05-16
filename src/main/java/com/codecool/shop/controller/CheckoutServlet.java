@@ -3,6 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.OrderDaoJdbc;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoJdbc;
 import com.codecool.shop.model.Order;
@@ -22,7 +23,7 @@ import java.util.Map;
 public class CheckoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoJdbc.getInstance();
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
 
         if (orderDataStore.noOrderPlaced()) {
@@ -57,16 +58,17 @@ public class CheckoutServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OrderDaoMem orderDaoMem = OrderDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoJdbc.getInstance();
 
-        if (!orderDaoMem.noOrderPlaced()) {
-            Order order = orderDaoMem.find(1);
+        if (!orderDataStore.noOrderPlaced()) {
+            Order order = orderDataStore.find(1);
             order.setCustomerName(req.getParameter("name"));
             order.setCustomerEmail(req.getParameter("email"));
             order.setCustomerPhone(req.getParameter("phone"));
             order.setCustomerBillingAddress(req.getParameter("billingAddress"));
             order.setCustomerShippingAddress(req.getParameter("shippingAddress"));
             order.setCustomerPaymentMethod(req.getParameter("paymentMethod"));
+            ((OrderDaoJdbc) orderDataStore).updateOrderAfterCheckout(order);
         }
 
         String currentURI = "/payment";
