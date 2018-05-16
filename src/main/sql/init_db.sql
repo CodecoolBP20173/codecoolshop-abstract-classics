@@ -78,7 +78,7 @@ CREATE SEQUENCE orders_id_seq
   NO MAXVALUE;
 
 CREATE TABLE orders (
-    id INTEGER NOT NULL DEFAULT nextval('product_category_id_seq'::regclass),
+    id INTEGER NOT NULL DEFAULT nextval('orders_id_seq'::regclass),
     name VARCHAR(255),
     description VARCHAR(255),
     email VARCHAR(255),
