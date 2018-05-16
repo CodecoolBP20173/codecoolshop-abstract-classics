@@ -82,7 +82,7 @@ CREATE TABLE orders (
     name VARCHAR(255),
     description VARCHAR(255),
     email VARCHAR(255),
-    phone CHAR(15),
+    phone VARCHAR(15),
     billing_address VARCHAR(255),
     shipping_address VARCHAR(255),
     payment_method VARCHAR(255)
