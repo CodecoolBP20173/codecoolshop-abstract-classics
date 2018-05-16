@@ -50,9 +50,7 @@ public class ProductDaoJdbc  implements ProductDao{
             preparedStatement.setString(2, product.getDescription());
             preparedStatement.setFloat(3, product.getDefaultPrice());
             preparedStatement.setString(4, product.getDefaultCurrency().toString());
-            // Todo
             preparedStatement.setInt(5, ProductCategoryDaoJdbc.getInstance().findByName(product.getProductCategory().getName()));
-            // Todo
             preparedStatement.setInt(6, SupplierDaoJdbc.getInstance().findByName(product.getSupplier().getName()));
             preparedStatement.setString(7, "picture_uri_placeholder");
             preparedStatement.executeUpdate();
