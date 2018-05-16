@@ -35,16 +35,23 @@ public class ProductController extends HttpServlet {
 
 
         int itemsInCart;
-        Map<Product,Integer> popoverItems;
+        Map<Integer,Integer> lineItems;
+        Map<Product,Integer> popoverItems = new HashMap<>();
 
         if (orderDataStore.noOrderPlaced()) {
             itemsInCart = 0;
-            popoverItems = new HashMap<>();
         } else {
             Order order = orderDataStore.find(1);
             itemsInCart = order.getNumberOfItems();
-            popoverItems = order.getLineItems();
-            System.out.println(popoverItems);
+
+            lineItems = order.getLineItems();
+
+            for (Map.Entry<Integer,Integer> p: lineItems.entrySet()) {
+                Integer key = p.getKey();
+                Integer value = p.getValue();
+
+                popoverItems.put(productDataStore.find(key), value);
+            }
         }
 
 
@@ -113,12 +120,13 @@ public class ProductController extends HttpServlet {
             int numberOfOrders = orderDataStore.getNumberOfOrders();
             String orderName = "Order-" + (numberOfOrders + 1);
             Order order = new Order(orderName);
+            order.addItem(productToAddId);
             orderDataStore.add(order);
-            order.addItem(productDataStore.find(productToAddId));
 
         } else {
             Order order = orderDataStore.find(1);
-            order.addItem(productDataStore.find(productToAddId));
+            Product productToAdd = productDataStore.find(productToAddId);
+            order.addItem(productToAddId);
         }
         addedId = productToAddId;
         String currentURI = req.getParameter("current-uri");
