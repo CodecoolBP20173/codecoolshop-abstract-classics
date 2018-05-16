@@ -124,7 +124,25 @@ public class OrderDaoJdbc implements OrderDao {
 
     @Override
     public void remove(int id) {
+        String orderProductsQuery = "DELETE FROM order_products WHERE order_id = ?;";
+        String ordersQuery = "DELETE FROM orders WHERE id = ?;";
+        String sequenceQuery = "ALTER SEQUENCE orders_id_seq RESTART WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE;";
 
+        try {
+            PreparedStatement orderProductsStatement = connection.prepareStatement(orderProductsQuery);
+            orderProductsStatement.setInt(1, id);
+            orderProductsStatement.executeUpdate();
+
+            PreparedStatement ordersStatement = connection.prepareStatement(ordersQuery);
+            ordersStatement.setInt(1, id);
+            ordersStatement.executeUpdate();
+
+            PreparedStatement sequenceStatement = connection.prepareStatement(sequenceQuery);
+            sequenceStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
