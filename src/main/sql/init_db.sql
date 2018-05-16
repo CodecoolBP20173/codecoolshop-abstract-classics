@@ -9,11 +9,13 @@ DROP TABLE IF EXISTS supplier;
 DROP TABLE IF EXISTS product_category;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS order_products;
+DROP TABLE IF EXISTS users;
 
 DROP SEQUENCE IF EXISTS product_id_seq;
 DROP SEQUENCE IF EXISTS supplier_id_seq;
 DROP SEQUENCE IF EXISTS product_category_id_seq;
 DROP SEQUENCE IF EXISTS orders_id_seq;
+DROP SEQUENCE IF EXISTS users_id_seq;
 
 
 CREATE SEQUENCE product_id_seq
@@ -87,7 +89,6 @@ CREATE TABLE orders (
 );
 
 
-
 ALTER TABLE orders ADD CONSTRAINT pk_orders_id PRIMARY KEY (id);
 
 
@@ -96,6 +97,32 @@ CREATE TABLE order_products (
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL
 );
+
+
+DROP TABLE IF EXISTS users;
+DROP SEQUENCE IF EXISTS users_id_seq;
+ALTER TABLE IF EXISTS users DROP CONSTRAINT IF EXISTS pk_users_id CASCADE;
+
+CREATE SEQUENCE users_id_seq
+  START WITH 0
+  INCREMENT BY 1
+  MINVALUE 0
+  NO MAXVALUE;
+
+CREATE TABLE users (
+  id INTEGER NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+  name VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone_number NUMERIC NOT NULL,
+  billing_address VARCHAR(255) NOT NULL,
+  shipping_address VARCHAR(255) NOT NULL
+);
+
+ALTER SEQUENCE users_id_seq RESTART WITH 0;
+
+ALTER TABLE users ADD CONSTRAINT pk_users_id PRIMARY KEY (id);
+
 
 
 ALTER TABLE product ADD CONSTRAINT fk_supplier_id FOREIGN KEY (supplier_id) REFERENCES supplier(id);
