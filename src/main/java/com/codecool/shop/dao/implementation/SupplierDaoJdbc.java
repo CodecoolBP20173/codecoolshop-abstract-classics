@@ -76,6 +76,30 @@ public class SupplierDaoJdbc implements SupplierDao {
         return supplier;
     }
 
+    public int findByName(String name) {
+
+        int id = 0;
+        String query = "SELECT id FROM supplier WHERE NAME =?;";
+
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return id;
+    }
+
+
+
+
     @Override
     public void remove(int id) {
         String query = "DELETE FROM supplier WHERE id=?;";
