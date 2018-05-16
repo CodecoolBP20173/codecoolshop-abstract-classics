@@ -96,11 +96,25 @@ public class OrderDaoJdbc implements OrderDao {
 
     @Override
     public int getNumberOfOrders() {
+        String query = "SELECT COUNT(id) AS orderCount FROM orders;";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()){
+                return resultSet.getInt("orderCount");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return 0;
     }
 
     @Override
     public boolean noOrderPlaced() {
-        return false;
+        return getNumberOfOrders() == 0;
     }
 }
