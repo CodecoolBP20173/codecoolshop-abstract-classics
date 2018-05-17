@@ -2,7 +2,10 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.OrderDaoJdbc;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoJdbc;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
@@ -14,32 +17,39 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet(urlPatterns = {"/payment"})
 public class PaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoJdbc.getInstance();
+        ProductDao productDataStore = ProductDaoJdbc.getInstance();
+        Map<Integer,Integer> orderLineItems;
+        Map<Product,Integer> shoppingItems = new HashMap<>();
 
         if (orderDataStore.noOrderPlaced()) {
             resp.sendRedirect("/");
 
         } else {
             Order order = orderDataStore.find(1);
+            orderLineItems = order.getLineItems();
 
             int subTotal = 0;
-            for (Map.Entry<Product, Integer> p : order.getLineItems().entrySet()) {
-                Product key = p.getKey();
+            for (Map.Entry<Integer,Integer> p: orderLineItems.entrySet()) {
+                Integer key = p.getKey();
                 Integer value = p.getValue();
 
-                subTotal += (key.getDefaultPrice() * value);
+                shoppingItems.put(productDataStore.find(key), value);
+
+                subTotal += (productDataStore.find(key).getDefaultPrice() * value);
             }
 
             TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
             WebContext context = new WebContext(req, resp, req.getServletContext());
 
-            context.setVariable("shoppingItems", order.getLineItems());
+            context.setVariable("shoppingItems", shoppingItems);
             context.setVariable("subTotal", subTotal);
             context.setVariable("paymentMethod", order.getCustomerPaymentMethod());
 
@@ -49,8 +59,8 @@ public class PaymentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OrderDaoMem orderDaoMem = OrderDaoMem.getInstance();
-        orderDaoMem.remove(1);
+        OrderDao orderDataStore = OrderDaoJdbc.getInstance();
+        orderDataStore.remove(1);
 
         resp.sendRedirect("/");
     }
