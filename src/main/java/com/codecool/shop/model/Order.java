@@ -4,12 +4,13 @@ import java.util.*;
 
 public class Order extends BaseModel {
 
-    private List<Product> itemList = new ArrayList<>();
-    private Map<Product,Integer> lineItems = new HashMap<>();
+    private List<Integer> itemList = new ArrayList<>();
+    private Map<Integer,Integer> lineItems = new HashMap<>();
     private Map<String, String> customerData;
 
     public Order(String name) {
         super(name);
+        this.description = "";
         this.itemList = new ArrayList<>();
         this.lineItems = new HashMap<>();
         this.customerData = new HashMap<>();
@@ -21,32 +22,32 @@ public class Order extends BaseModel {
         customerData.put("paymentMethod", "");
     }
 
-    public void addItem (Product product) {
-        itemList.add(product);
-        increaseItemNumber(product);
+    public void addItem (Integer productId) {
+        itemList.add(productId);
+        increaseItemNumber(productId);
     }
 
-    public void increaseItemNumber(Product product) {
-        if (lineItems.containsKey(product)) {
-            lineItems.put(product, lineItems.get(product) + 1);
+    public void increaseItemNumber(Integer productId) {
+        if (lineItems.containsKey(productId)) {
+            lineItems.put(productId, lineItems.get(productId) + 1);
         } else {
-            lineItems.put(product, 1);
+            lineItems.put(productId, 1);
         }
     }
 
-    public void decreaseItemNumber(Product product, Iterator iterator) {
-        if (lineItems.get(product) > 0) {
-            lineItems.put(product, lineItems.get(product) -1);
-            itemList.remove(product);
+    public void decreaseItemNumber(Integer productId, Iterator iterator) {
+        if (lineItems.get(productId) > 0) {
+            lineItems.put(productId, lineItems.get(productId) - 1);
+            itemList.remove(productId);
         }
 
-        if (lineItems.get(product) == 0) {
+        if (lineItems.get(productId) == 0) {
             iterator.remove();
-            itemList.remove(product);
+            itemList.remove(productId);
         }
     }
 
-    public List<Product> getItemList() {
+    public List<Integer> getItemList() {
         return itemList;
     }
 
@@ -54,7 +55,7 @@ public class Order extends BaseModel {
         return itemList.size();
     }
 
-    public Map<Product, Integer> getLineItems() {
+    public Map<Integer, Integer> getLineItems() {
         return lineItems;
     }
 
