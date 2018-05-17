@@ -25,10 +25,7 @@ public class Registration extends HttpServlet {
         String password = request.getParameter("password");
         String hashedpw = Utils.hashPassword(password);
         String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String billing_address = request.getParameter("billing_address");
-        String shipping_address = request.getParameter("shipping_address");
-        User user = new User(username, hashedpw, phone, email, billing_address, shipping_address);
+        User user = new User(username, hashedpw, email);
 
         UserDaoJdbc udjdbc = UserDaoJdbc.getInstance();
         udjdbc.add(user);

@@ -108,10 +108,7 @@ CREATE TABLE users (
   id INTEGER NOT NULL DEFAULT nextval('users_id_seq'::regclass),
   name VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  phone_number VARCHAR(11) NOT NULL,
-  billing_address VARCHAR(255) NOT NULL,
-  shipping_address VARCHAR(255) NOT NULL
+  email VARCHAR(255) NOT NULL
 );
 
 ALTER SEQUENCE users_id_seq RESTART WITH 0;

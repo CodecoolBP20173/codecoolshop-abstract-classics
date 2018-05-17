@@ -129,11 +129,9 @@
             <div id="login">
                 <a href="/login" th:if="${session.username == null}" class="btn btn-primary">Login</a>
             </div>
-            <div id="logout">
-                <a href="/index" th:if="${session.username != null}">Log out</a>
-            </div>
-            <br>
-            <br>
+            <form id="logout" action="/logout" method="post" th:if="${session.username != null}">
+                <button class="btn btn-primary" type="submit">Logout</button>
+            </form>
 
             <div id="products" class="row list-group">
                 <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
