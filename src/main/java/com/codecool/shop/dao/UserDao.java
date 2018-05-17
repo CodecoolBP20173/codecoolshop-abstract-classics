@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface UserDao {
     void add(User user);
+    User findByEmail(String eMail);
     User find(int id);
     void remove(int id);
 

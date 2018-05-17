@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +72,39 @@ public class UserDaoJdbc implements UserDao {
                 String password = rs.getString("password");
                 String email = rs.getString("email");
                 int phone = rs.getInt("phone_number");
+                String billingAddress = rs.getString("billing_address");
+                String shippingAddress = rs.getString("shipping_address");
+
+                user = new User(name, password, phone, email, billingAddress, shippingAddress);
+                user.setId(id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    @Override
+    public User findByEmail(String eMail) {
+        User user = null;
+
+        String query = "SELECT * FROM users WHERE email=?;";
+
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(query);
+            preparedStatement.setString(1, eMail);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String password = rs.getString("password");
+                String email = rs.getString("email");
+                long phone = rs.getLong("phone_number");
+
                 String billingAddress = rs.getString("billing_address");
                 String shippingAddress = rs.getString("shipping_address");
 
