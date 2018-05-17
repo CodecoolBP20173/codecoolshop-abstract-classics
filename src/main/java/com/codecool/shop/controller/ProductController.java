@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,16 +33,25 @@ public class ProductController extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJdbc.getInstance();
         SupplierDao productSupplierStore = SupplierDaoJdbc.getInstance();
         OrderDao orderDataStore = OrderDaoJdbc.getInstance();
+        HttpSession session = req.getSession();
+        int sessionUserId;
 
+        if (session == null || session.getAttribute("userId") == null) {
+            sessionUserId = 0;
+        } else {
+            sessionUserId = (Integer) session.getAttribute("userId");
+        }
+
+        int orderId = sessionUserId;
 
         int itemsInCart;
         Map<Integer,Integer> lineItems;
         Map<Product,Integer> popoverItems = new HashMap<>();
 
-        if (orderDataStore.noOrderPlaced()) {
+        if (orderDataStore.noOrderPlacedForUser(sessionUserId)) {
             itemsInCart = 0;
         } else {
-            Order order = orderDataStore.find(1);
+            Order order = orderDataStore.find(orderId);
             itemsInCart = order.getNumberOfItems();
 
             lineItems = order.getLineItems();
@@ -112,19 +122,21 @@ public class ProductController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
         int productToAddId = Integer.valueOf(req.getParameter("add-button"));
+        HttpSession session = req.getSession();
+        int sessionUserId = (Integer) session.getAttribute("userId");
+        int orderId = sessionUserId;
 
         OrderDao orderDataStore = OrderDaoJdbc.getInstance();
 
-        if (orderDataStore.noOrderPlaced()) {
+        if (orderDataStore.noOrderPlacedForUser(sessionUserId)) {
 
-            int numberOfOrders = orderDataStore.getNumberOfOrders();
-            String orderName = "Order-" + (numberOfOrders + 1);
-            Order order = new Order(orderName);
+            String orderName = "Order-" + orderId;
+            Order order = new Order(orderName, orderId);
             order.addItem(productToAddId);
             orderDataStore.add(order);
 
         } else {
-            Order order = orderDataStore.find(1);
+            Order order = orderDataStore.find(orderId);
             Product productToAdd = productDataStore.find(productToAddId);
             order.addItem(productToAddId);
             ((OrderDaoJdbc) orderDataStore).updateOrderProducts(order, productToAdd);

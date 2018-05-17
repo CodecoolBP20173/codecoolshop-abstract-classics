@@ -71,14 +71,9 @@ CREATE TABLE product_category (
 
 ALTER TABLE product_category ADD CONSTRAINT pk_product_category_id PRIMARY KEY (id);
 
-CREATE SEQUENCE orders_id_seq
-  START WITH 1
-  INCREMENT BY 1
-  NO MINVALUE
-  NO MAXVALUE;
 
 CREATE TABLE orders (
-    id INTEGER NOT NULL DEFAULT nextval('orders_id_seq'::regclass),
+    id INTEGER NOT NULL,
     name VARCHAR(255),
     description VARCHAR(255),
     email VARCHAR(255),
@@ -104,9 +99,9 @@ DROP SEQUENCE IF EXISTS users_id_seq;
 ALTER TABLE IF EXISTS users DROP CONSTRAINT IF EXISTS pk_users_id CASCADE;
 
 CREATE SEQUENCE users_id_seq
-  START WITH 0
+  START WITH 1
   INCREMENT BY 1
-  MINVALUE 0
+  MINVALUE 1
   NO MAXVALUE;
 
 CREATE TABLE users (
@@ -116,7 +111,6 @@ CREATE TABLE users (
   email VARCHAR(255) NOT NULL
 );
 
-ALTER SEQUENCE users_id_seq RESTART WITH 0;
 
 ALTER TABLE users ADD CONSTRAINT pk_users_id PRIMARY KEY (id);
 
@@ -127,3 +121,5 @@ ALTER TABLE product ADD CONSTRAINT fk_product_category_id FOREIGN KEY (product_c
 
 ALTER TABLE order_products ADD CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders(id);
 ALTER TABLE order_products ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product(id);
+
+ALTER TABLE orders ADD CONSTRAINT fk_user_id FOREIGN KEY (id) REFERENCES users(id);

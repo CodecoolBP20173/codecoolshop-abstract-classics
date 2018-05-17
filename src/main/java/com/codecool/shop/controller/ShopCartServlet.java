@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -30,28 +31,36 @@ public class ShopCartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         OrderDao orderDataStore = OrderDaoJdbc.getInstance();
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
+        HttpSession session = req.getSession();
+        int sessionUserId;
 
-        Order order = orderDataStore.find(1);
-        Map<Integer,Integer> orderLineItems = order.getLineItems();
-        Map<Product,Integer> shoppingItems = new HashMap<>();
+        if (session == null || session.getAttribute("userId") == null) {
+            resp.sendRedirect("/");
+        } else {
+            sessionUserId = (Integer) session.getAttribute("userId");
 
-        int subTotal = 0;
-        for (Map.Entry<Integer,Integer> p: orderLineItems.entrySet()) {
-            Integer key = p.getKey();
-            Integer value = p.getValue();
+            int orderId = sessionUserId;
 
-            shoppingItems.put(productDataStore.find(key), value);
+            Order order = orderDataStore.find(orderId);
+            Map<Integer,Integer> orderLineItems = order.getLineItems();
+            Map<Product,Integer> shoppingItems = new HashMap<>();
 
-            subTotal += (productDataStore.find(key).getDefaultPrice() * value);
+            int subTotal = 0;
+            for (Map.Entry<Integer,Integer> p: orderLineItems.entrySet()) {
+                Integer key = p.getKey();
+                Integer value = p.getValue();
+
+                shoppingItems.put(productDataStore.find(key), value);
+
+                subTotal += (productDataStore.find(key).getDefaultPrice() * value);
+            }
+
+            String buttonValue = req.getParameter("addRemove");
+            removeAddCart(buttonValue, order);
+            WebContext context = new WebContext(req, resp, req.getServletContext());
+            context.setVariable("shoppingItems", shoppingItems);
+            resp.sendRedirect("/cart");
         }
-
-        String buttonValue = req.getParameter("addRemove");
-        removeAddCart(buttonValue);
-        WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("shoppingItems", shoppingItems);
-        resp.sendRedirect("/cart");
-
-
     }
 
     @Override
@@ -60,38 +69,45 @@ public class ShopCartServlet extends HttpServlet {
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
         Map<Integer,Integer> orderLineItems;
         Map<Product,Integer> shoppingItems = new HashMap<>();
+        HttpSession session = req.getSession();
+        int sessionUserId;
 
-        if (orderDataStore.noOrderPlaced()) {
-            orderLineItems = new HashMap<>();
+        if (session == null || session.getAttribute("userId") == null) {
+            resp.sendRedirect("/");
         } else {
-            Order order = orderDataStore.find(1);
-            orderLineItems = order.getLineItems();
+            sessionUserId = (Integer) session.getAttribute("userId");
+
+            int orderId = sessionUserId;
+
+            if (orderDataStore.noOrderPlacedForUser(sessionUserId)) {
+                orderLineItems = new HashMap<>();
+            } else {
+                Order order = orderDataStore.find(orderId);
+                orderLineItems = order.getLineItems();
+            }
+
+            int subTotal = 0;
+            for (Map.Entry<Integer,Integer> p: orderLineItems.entrySet()) {
+                Integer key = p.getKey();
+                Integer value = p.getValue();
+
+                shoppingItems.put(productDataStore.find(key), value);
+
+                subTotal += (productDataStore.find(key).getDefaultPrice() * value);
+            }
+
+
+            TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+            WebContext context = new WebContext(req, resp, req.getServletContext());
+            context.setVariable("shoppingItems", shoppingItems);
+            context.setVariable("subTotal", subTotal);
+            engine.process("product/cart.html", context, resp.getWriter());
         }
-
-        int subTotal = 0;
-        for (Map.Entry<Integer,Integer> p: orderLineItems.entrySet()) {
-            Integer key = p.getKey();
-            Integer value = p.getValue();
-
-            shoppingItems.put(productDataStore.find(key), value);
-
-            subTotal += (productDataStore.find(key).getDefaultPrice() * value);
-        }
-
-
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-        WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("shoppingItems", shoppingItems);
-        context.setVariable("subTotal", subTotal);
-        engine.process("product/cart.html", context, resp.getWriter());
-
-
     }
 
-    private void removeAddCart(String button) {
+    private void removeAddCart(String button, Order order) {
         OrderDao orderDataStore = OrderDaoJdbc.getInstance();
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
-        Order order = orderDataStore.find(1);
 
         Iterator<Map.Entry<Integer,Integer>> it = order.getLineItems().entrySet().iterator();
         while (it.hasNext()) {
