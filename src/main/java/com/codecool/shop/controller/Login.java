@@ -16,7 +16,6 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
 
         String username = request.getParameter("username");
         String pass = request.getParameter("password");
@@ -37,10 +36,7 @@ public class Login extends HttpServlet {
         }
         else
         {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
-            PrintWriter outWrite= response.getWriter();
-            outWrite.println("<font color=red>Either user name or password is wrong.</font>");
-            rd.include(request, response);
+            response.sendRedirect("/login");
         }
     }
     @Override
