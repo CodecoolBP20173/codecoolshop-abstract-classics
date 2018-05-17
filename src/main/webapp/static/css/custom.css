@@ -185,14 +185,18 @@ body {
 
 #login{
     position: fixed !important;
-    top: 0;
-    left: 0;
+    top: 40px;
+    left: 40px;
+    z-index: 10000;
 }
 
 #logout{
     position: fixed !important;
-    top: 0;
-    left: 10px;
+    top: 40px;
+    left: 40px;
+    z-index: 10000;
+
+
 }
 
 #showAllButton {

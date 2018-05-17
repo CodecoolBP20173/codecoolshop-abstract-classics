@@ -41,6 +41,13 @@
                         </span>
     </div>
 </a>
+
+<div id="login">
+    <a href="/login" th:if="${session.username == null}" class="btn btn-primary">Login</a>
+</div>
+<form id="logout" action="/logout" method="post" th:if="${session.username != null}">
+    <button class="btn btn-primary" type="submit">Logout</button>
+</form>
 <div id="popper-content" class="hide"  >
     <div th:each="item : ${lineItems}">
         <div th:text="${item.value.toString() + ' ' + 'x' + '   ' + item.key.name + '               ' + 'Price: ' + item.value*item.key.getDefaultPrice()}">
@@ -126,13 +133,6 @@
             <div class="row">
                 <a href="/" class="btn btn-primary" id="showAllButton" >Select All Products</a>
             </div>
-            <div id="login">
-                <a href="/login" th:if="${session.username == null}" class="btn btn-primary">Login</a>
-            </div>
-            <form id="logout" action="/logout" method="post" th:if="${session.username != null}">
-                <button class="btn btn-primary" type="submit">Logout</button>
-            </form>
-
             <div id="products" class="row list-group">
                 <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
                     <div class="thumbnail">
