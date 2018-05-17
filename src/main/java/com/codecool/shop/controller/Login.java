@@ -24,22 +24,28 @@ public class Login extends HttpServlet {
 
         String username = request.getParameter("username");
         String pass = request.getParameter("password");
+
         User user = userDataStore.findByName(username);
-
-        if(user != null && Validate.checkUser(username, pass))
-        {
-            int userId = user.getId();
-            HttpSession session = request.getSession();
-            session.setAttribute("username", username );
-            session.setAttribute("userId", userId);
-            session.setMaxInactiveInterval(30*60);
-
-            Cookie loginCookie = new Cookie("user",username);
-            loginCookie.setMaxAge(30*60);
-            response.addCookie(loginCookie);
-            response.sendRedirect("/");
-        } else {
+        if (user == null) {
             response.sendRedirect("/login");
+        } else {
+            int userId = user.getId();
+
+            if(Validate.checkUser(username, pass)) {
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username );
+                session.setAttribute("userId", userId);
+                //setting session to expiry in 30 mins
+                session.setMaxInactiveInterval(30*60);
+                Cookie loginCookie = new Cookie("user",username);
+                //setting cookie to expiry in 30 mins
+                loginCookie.setMaxAge(30*60);
+                response.addCookie(loginCookie);
+                response.sendRedirect("/");
+
+            } else {
+                response.sendRedirect("/login");
+            }
         }
     }
     @Override

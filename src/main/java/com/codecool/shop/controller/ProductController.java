@@ -1,11 +1,14 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.*;
-import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.implementation.OrderDaoJdbc;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoJdbc;
+import com.codecool.shop.dao.implementation.ProductDaoJdbc;
+import com.codecool.shop.dao.implementation.SupplierDaoJdbc;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
@@ -21,7 +24,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/","/*"})
+@WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
     private int addedId = -1;
@@ -45,8 +48,8 @@ public class ProductController extends HttpServlet {
         int orderId = sessionUserId;
 
         int itemsInCart;
-        Map<Integer,Integer> lineItems;
-        Map<Product,Integer> popoverItems = new HashMap<>();
+        Map<Integer, Integer> lineItems;
+        Map<Product, Integer> popoverItems = new HashMap<>();
 
         if (orderDataStore.noOrderPlacedForUser(sessionUserId)) {
             itemsInCart = 0;
@@ -56,7 +59,7 @@ public class ProductController extends HttpServlet {
 
             lineItems = order.getLineItems();
 
-            for (Map.Entry<Integer,Integer> p: lineItems.entrySet()) {
+            for (Map.Entry<Integer, Integer> p : lineItems.entrySet()) {
                 Integer key = p.getKey();
                 Integer value = p.getValue();
 
@@ -64,33 +67,25 @@ public class ProductController extends HttpServlet {
             }
         }
 
-
-
-//        Map params = new HashMap<>();
-//        params.put("category", productCategoryDataStore.find(1));
-//        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
 
         // This context is specific to Web Applications
         WebContext context = new WebContext(req, resp, req.getServletContext());
-//        context.setVariables(params);
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", productSupplierStore.getAll());
         context.setVariable("itemsInCart", itemsInCart);
 
         int subTotal = 0;
-        for (Map.Entry<Product,Integer> p: popoverItems.entrySet()) {
+        for (Map.Entry<Product, Integer> p : popoverItems.entrySet()) {
             Product key = p.getKey();
             Integer value = p.getValue();
 
-            subTotal += (key.getDefaultPrice()*value);
+            subTotal += (key.getDefaultPrice() * value);
         }
 
-
-
         String queryString = req.getQueryString();
+
         if (queryString != null) {
             if (req.getQueryString().contains("category")) {
                 int categoryId = Integer.valueOf(req.getParameter("category"));
@@ -107,11 +102,9 @@ public class ProductController extends HttpServlet {
             context.setVariable("active", "active");
             context.setVariable("popupContentName", productDataStore.find(addedId).getName());
             context.setVariable("popupContentId", productDataStore.find(addedId).getId());
-
-
-
             addedId = -1;
         }
+
         context.setVariable("lineItems", popoverItems);
         context.setVariable("subTotal", subTotal);
         System.out.println("get");
