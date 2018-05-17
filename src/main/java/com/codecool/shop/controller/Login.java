@@ -4,6 +4,7 @@ import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.controller.Validate;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.dao.implementation.UserDaoJdbc;
+import com.codecool.shop.model.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -23,25 +24,21 @@ public class Login extends HttpServlet {
 
         String username = request.getParameter("username");
         String pass = request.getParameter("password");
-        int userId = userDataStore.findByName(username).getId();
+        User user = userDataStore.findByName(username);
 
-        if(Validate.checkUser(username, pass))
+        if(user != null && Validate.checkUser(username, pass))
         {
+            int userId = user.getId();
             HttpSession session = request.getSession();
             session.setAttribute("username", username );
             session.setAttribute("userId", userId);
-            //setting session to expiry in 30 mins
             session.setMaxInactiveInterval(30*60);
+
             Cookie loginCookie = new Cookie("user",username);
-            //setting cookie to expiry in 30 mins
             loginCookie.setMaxAge(30*60);
             response.addCookie(loginCookie);
             response.sendRedirect("/");
-
-
-        }
-        else
-        {
+        } else {
             response.sendRedirect("/login");
         }
     }
