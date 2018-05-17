@@ -1,4 +1,4 @@
-$(".parallax").scrollTop(document.cookie);
+$(".parallax").scrollTop(getCookie("indexScrollPosition"));
 
 $( document ).ready(function() {
     var popupActivator = document.getElementById("popoverData").dataset.name;
@@ -47,14 +47,13 @@ $( document ).ready(function() {
 
     for (var i = 0; i < addButtons.length; i++) {
         addButtons[i].addEventListener('click', function () {
-            document.cookie=$(".parallax").scrollTop();
+            document.cookie="indexScrollPosition=" + $(".parallax").scrollTop();
             
         })
     }
     for (var i = 0; i < catButtons.length; i++) {
         catButtons[i].addEventListener('click', function () {
-            document.cookie=$(".parallax").scrollTop();
-
+            document.cookie= "indexScrollPosition=" + $(".parallax").scrollTop();
         })
     }
 
@@ -134,6 +133,13 @@ function getElementToMove(elements) {
             return element;
         }
     }
+}
+
+
+function getCookie(name) {
+    let value = "; " + document.cookie;
+    let parts = value.split("; " + name + "=");
+    if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
 
