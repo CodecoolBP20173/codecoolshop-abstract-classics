@@ -42,7 +42,7 @@ public class UserDaoJdbc implements UserDao {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setInt(4, user.getPhoneNumber());
+            preparedStatement.setString(4, user.getPhoneNumber());
             preparedStatement.setString(5, user.getBillingAddress());
             preparedStatement.setString(6, user.getShippingAddress());
 
@@ -51,6 +51,37 @@ public class UserDaoJdbc implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public User findByName(String name) {
+        User user = null;
+
+        String query = "SELECT * FROM users WHERE name=?;";
+
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                Integer id = rs.getInt("id");
+                String password = rs.getString("password");
+                String email = rs.getString("email");
+                String  phone = rs.getString("phone_number");
+                String billingAddress = rs.getString("billing_address");
+                String shippingAddress = rs.getString("shipping_address");
+
+                user = new User(name, password, phone, email, billingAddress, shippingAddress);
+                user.setId(id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
     }
 
     @Override
@@ -70,7 +101,7 @@ public class UserDaoJdbc implements UserDao {
                 String name = rs.getString("name");
                 String password = rs.getString("password");
                 String email = rs.getString("email");
-                int phone = rs.getInt("phone_number");
+                String phone = rs.getString("phone_number");
                 String billingAddress = rs.getString("billing_address");
                 String shippingAddress = rs.getString("shipping_address");
 
@@ -114,7 +145,7 @@ public class UserDaoJdbc implements UserDao {
                 String name = rs.getString("name");
                 String password = rs.getString("password");
                 String email = rs.getString("email");
-                int phone = rs.getInt("phone_number");
+                String phone = rs.getString("phone_number");
                 String billingAddress = rs.getString("billing_address");
                 String shippingAddress = rs.getString("shipping_address");
 

@@ -183,6 +183,18 @@ body {
     width: 200px;
 }
 
+#login{
+    position: fixed !important;
+    top: 0;
+    left: 0;
+}
+
+#logout{
+    position: fixed !important;
+    top: 0;
+    left: 0;
+}
+
 #showAllButton {
     width: 200px;
 }

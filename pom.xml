@@ -42,6 +42,12 @@
                     <httpConnector>
                         <port>8888</port>
                     </httpConnector>
+                    <loginServices>
+                        <loginService implementation="org.eclipse.jetty.security.HashLoginService">
+                            <name>Java EE Login</name>
+                            <config>${project.basedir}/src/webapp/WEB-INF/web.xml</config>
+                        </loginService>
+                    </loginServices>
                 </configuration>
             </plugin>
         </plugins>
@@ -58,6 +64,11 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.3m</version>
         </dependency>
         <dependency>
             <groupId>org.thymeleaf</groupId>

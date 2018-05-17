@@ -114,7 +114,7 @@ CREATE TABLE users (
   name VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
-  phone_number NUMERIC NOT NULL,
+  phone_number VARCHAR(11) NOT NULL,
   billing_address VARCHAR(255) NOT NULL,
   shipping_address VARCHAR(255) NOT NULL
 );

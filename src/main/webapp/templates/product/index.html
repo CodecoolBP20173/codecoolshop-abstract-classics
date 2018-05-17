@@ -126,8 +126,11 @@
             <div class="row">
                 <a href="/" class="btn btn-primary" id="showAllButton" >Select All Products</a>
             </div>
-            <div class="row">
-                <a href="/login" class="btn btn-primary">Login</a>
+            <div id="login">
+                <a href="/login" th:if="${session.username == null}" class="btn btn-primary">Login</a>
+            </div>
+            <div id="logout">
+                <a href="/index" th:if="${session.username != null}">Log out</a>
             </div>
             <br>
             <br>
@@ -147,7 +150,7 @@
                                 </div>
                                 <div class="col-xs-12 col-md-6">
                                     <form th:action="${#httpServletRequest.getRequestURI()}" method="post">
-                                        <button type="submit" class="btn btn-success addButton" name="add-button" th:value="${prod.id}">Add to cart</button>
+                                        <button type="submit" class="btn btn-success addButton" name="add-button" th:if="${session.username != null}" th:value="${prod.id}">Add to cart</button>
                                         <input hidden name="current-uri" th:value="${#httpServletRequest.getRequestURI()} +'?' + ${#httpServletRequest.getQueryString()}" th:if="${ #httpServletRequest.getQueryString() != null}">
                                         <input hidden name="current-uri" th:value="${#httpServletRequest.getRequestURI()}" th:if="${#httpServletRequest.getQueryString() eq null}">
                                     </form>
