@@ -25,9 +25,9 @@ public class Logout extends HttpServlet {
         System.out.println("User=" + session.getAttribute("user"));
         if (session.getAttribute("username") != null) {
             session.invalidate();
-            response.sendRedirect("/index");
+
         }
-        response.sendRedirect("index.html");
+        response.sendRedirect("/");
     }
 
 }
