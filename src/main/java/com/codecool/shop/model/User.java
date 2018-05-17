@@ -4,19 +4,12 @@ public class User {
     private int id;
     private String name;
     private String password;
-    private String phoneNumber;
     private String email;
-    private String billingAddress;
-    private String shippingAddress;
 
-    public User(String name, String password, String phoneNumber, String email,
-                String billingAddress, String shippingAddress) {
+    public User(String name, String password, String email) {
         this.name = name;
         this.password = password;
-        this.phoneNumber = phoneNumber;
         this.email = email;
-        this.billingAddress = billingAddress;
-        this.shippingAddress = shippingAddress;
     }
 
     public int getId() {
@@ -43,14 +36,6 @@ public class User {
         this.password = password;
     }
 
-    public String  getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String  phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -59,19 +44,4 @@ public class User {
         this.email = email;
     }
 
-    public String getBillingAddress() {
-        return billingAddress;
-    }
-
-    public void setBillingAddress(String billingAddress) {
-        this.billingAddress = billingAddress;
-    }
-
-    public String getShippingAddress() {
-        return shippingAddress;
-    }
-
-    public void setShippingAddress(String shippingAddress) {
-        this.shippingAddress = shippingAddress;
-    }
 }
