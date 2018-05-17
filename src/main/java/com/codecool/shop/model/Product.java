@@ -2,7 +2,7 @@ package com.codecool.shop.model;
 
 import java.util.Currency;
 
-public class Product extends BaseModel {
+public class Product extends BaseModel implements Comparable<Product>{
 
     private float defaultPrice;
     private Currency defaultCurrency;
@@ -82,5 +82,10 @@ public class Product extends BaseModel {
                 this.defaultCurrency.toString(),
                 this.productCategory.getName(),
                 this.supplier.getName());
+    }
+
+    @Override
+    public int compareTo(Product product) {
+        return Integer.valueOf(this.getId()).compareTo(product.getId());
     }
 }
