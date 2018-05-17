@@ -17,7 +17,7 @@
                 <!-- Username -->
                 <label class="control-label"  for="username">Username</label>
                 <div class="controls">
-                    <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+                    <input type="text" required="required" id="username" name="username" placeholder="" class="input-xlarge">
                     <p class="help-block">Username can contain any letters or numbers, without spaces</p>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <!-- E-mail -->
                 <label class="control-label" for="email">E-mail</label>
                 <div class="controls">
-                    <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+                    <input type="text" required="required" id="email" name="email" placeholder="" class="input-xlarge">
                     <p class="help-block">Please provide your E-mail</p>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <!-- Password-->
                 <label class="control-label" for="password">Password</label>
                 <div class="controls">
-                    <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                    <input type="password" required="required" id="password" name="password" placeholder="" class="input-xlarge">
                     <p class="help-block">Password should be at least 4 characters</p>
                 </div>
             </div>
@@ -44,17 +44,16 @@
                 <!-- Password -->
                 <label class="control-label"  for="password_confirm">Password (Confirm)</label>
                 <div class="controls">
-                    <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
+                    <input type="password" required="required" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
                     <p class="help-block">Please confirm password</p>
                 </div>
             </div>
 
             <div class="control-group">
-                <!-- E-mail -->
+                <!-- Phone number -->
                 <label class="control-label" for="phone">Phone number</label>
                 <div class="controls">
-                    <input class="form-control" id="phone" name="phone" placeholder="Enter your phone number (3620456123)"
-                           required="required" pattern="\d*" maxlength="15">
+                    <input class="form-control" required="required" id="phone" name="phone" placeholder="Enter your phone number (3620456123)" pattern="\d*" maxlength="15">
                     <p class="help-block">Please provide your Phone number</p>
                 </div>
             </div>
@@ -63,7 +62,7 @@
                 <!-- Billing address -->
                 <label class="control-label" for="billing_address">Billing address</label>
                 <div class="controls">
-                    <input type="text" id="billing_address" name="billing_address" placeholder="" class="input-xlarge">
+                    <input type="text" required="required" id="billing_address" name="billing_address" placeholder="" class="input-xlarge">
                     <p class="help-block">Please provide your Billing address</p>
                 </div>
             </div>
@@ -72,7 +71,7 @@
                 <!-- Shipping address -->
                 <label class="control-label" for="shipping_address">Shipping address</label>
                 <div class="controls">
-                    <input type="text" id="shipping_address" name="shipping_address" placeholder="" class="input-xlarge">
+                    <input type="text" required="required" id="shipping_address" name="shipping_address" placeholder="" class="input-xlarge">
                     <p class="help-block">Please provide your Shipping address</p>
                 </div>
             </div>
