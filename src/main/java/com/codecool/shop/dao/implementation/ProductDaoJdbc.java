@@ -52,7 +52,7 @@ public class ProductDaoJdbc  implements ProductDao{
             preparedStatement.setString(4, product.getDefaultCurrency().toString());
             preparedStatement.setInt(5, ProductCategoryDaoJdbc.getInstance().findByName(product.getProductCategory().getName()));
             preparedStatement.setInt(6, SupplierDaoJdbc.getInstance().findByName(product.getSupplier().getName()));
-            preparedStatement.setString(7, "picture_uri_placeholder");
+            preparedStatement.setString(7, product.getImgUrl());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,7 +76,7 @@ public class ProductDaoJdbc  implements ProductDao{
                 ProductCategory productCategory = ProductCategoryDaoJdbc.getInstance().find(rs.getInt("product_category_id"));
                 Supplier supplier = SupplierDaoJdbc.getInstance().find(rs.getInt("supplier_id"));
                 String productImageUrl = rs.getString("product_image");
-                product = new Product(name, defaultPrice, currency, description, productCategory, supplier);
+                product = new Product(name, defaultPrice, currency, description, productCategory, supplier, productImageUrl);
                 product.setId(id);
             }
         } catch (SQLException e) {
@@ -117,7 +117,8 @@ public class ProductDaoJdbc  implements ProductDao{
                 String currency = rs.getString("default_currency");
                 ProductCategory productCategory = ProductCategoryDaoJdbc.getInstance().find(rs.getInt("product_category_id"));
                 Supplier supplier = SupplierDaoJdbc.getInstance().find(rs.getInt("supplier_id"));
-                Product product = new Product(name, defaultPrice, currency, description, productCategory, supplier);
+                String productImageUrl = rs.getString("product_image");
+                Product product = new Product(name, defaultPrice, currency, description, productCategory, supplier, productImageUrl);
                 product.setId(id);
                 data.add(product);
             }
@@ -127,6 +128,10 @@ public class ProductDaoJdbc  implements ProductDao{
 
         return data;
     }
+
+
+
+
 
     @Override
     public List<Product> getBy(Supplier supplier) {
@@ -148,7 +153,9 @@ public class ProductDaoJdbc  implements ProductDao{
                 String currency = rs.getString("default_currency");
                 ProductCategory productCategory = ProductCategoryDaoJdbc.getInstance().find(rs.getInt("product_category_id"));
                 supplier = SupplierDaoJdbc.getInstance().find(rs.getInt("supplier_id"));
-                Product product = new Product(name, defaultPrice, currency, description, productCategory, supplier);
+                String productImageUrl = rs.getString("product_image");
+                Product product = new Product(name, defaultPrice, currency, description, productCategory, supplier, productImageUrl);
+                product.setId(rs.getInt("id"));
                 data.add(product);
             }
         } catch (SQLException e) {
@@ -178,7 +185,9 @@ public class ProductDaoJdbc  implements ProductDao{
                 String currency = rs.getString("default_currency");
                 productCategory = ProductCategoryDaoJdbc.getInstance().find(rs.getInt("product_category_id"));
                 Supplier supplier = SupplierDaoJdbc.getInstance().find(rs.getInt("supplier_id"));
-                Product product = new Product(name, defaultPrice, currency, description, productCategory, supplier);
+                String productImageUrl = rs.getString("product_image");
+                Product product = new Product(name, defaultPrice, currency, description, productCategory, supplier, productImageUrl);
+                product.setId(rs.getInt("id"));
                 data.add(product);
             }
         } catch (SQLException e) {
