@@ -34,17 +34,14 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public void add(User user) {
-        String query = "INSERT INTO public.users (name, password, email, phone_number, billing_address, shipping_address)" +
-                " VALUES (?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO public.users (name, password, email)" +
+                " VALUES (?, ?, ?);";
         try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(query);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setString(4, user.getPhoneNumber());
-            preparedStatement.setString(5, user.getBillingAddress());
-            preparedStatement.setString(6, user.getShippingAddress());
 
             preparedStatement.executeUpdate();
 
@@ -70,11 +67,8 @@ public class UserDaoJdbc implements UserDao {
                 Integer id = rs.getInt("id");
                 String password = rs.getString("password");
                 String email = rs.getString("email");
-                String  phone = rs.getString("phone_number");
-                String billingAddress = rs.getString("billing_address");
-                String shippingAddress = rs.getString("shipping_address");
 
-                user = new User(name, password, phone, email, billingAddress, shippingAddress);
+                user = new User(name, password, email);
                 user.setId(id);
             }
         } catch (SQLException e) {
@@ -101,11 +95,8 @@ public class UserDaoJdbc implements UserDao {
                 String name = rs.getString("name");
                 String password = rs.getString("password");
                 String email = rs.getString("email");
-                String phone = rs.getString("phone_number");
-                String billingAddress = rs.getString("billing_address");
-                String shippingAddress = rs.getString("shipping_address");
 
-                user = new User(name, password, phone, email, billingAddress, shippingAddress);
+                user = new User(name, password, email);
                 user.setId(id);
             }
         } catch (SQLException e) {
@@ -145,11 +136,8 @@ public class UserDaoJdbc implements UserDao {
                 String name = rs.getString("name");
                 String password = rs.getString("password");
                 String email = rs.getString("email");
-                String phone = rs.getString("phone_number");
-                String billingAddress = rs.getString("billing_address");
-                String shippingAddress = rs.getString("shipping_address");
 
-                User user = new User(name, password, phone, email, billingAddress, shippingAddress);
+                User user = new User(name, password, email);
                 user.setId(id);
                 data.add(user);
             }
