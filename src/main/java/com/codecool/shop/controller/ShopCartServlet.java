@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 
 @WebServlet(urlPatterns = {"/cart/*", "/cart"})
 public class ShopCartServlet extends HttpServlet {
@@ -43,7 +44,7 @@ public class ShopCartServlet extends HttpServlet {
 
             Order order = orderDataStore.find(orderId);
             Map<Integer,Integer> orderLineItems = order.getLineItems();
-            Map<Product,Integer> shoppingItems = new HashMap<>();
+            Map<Product,Integer> shoppingItems = new TreeMap<>();
 
             int subTotal = 0;
             for (Map.Entry<Integer,Integer> p: orderLineItems.entrySet()) {
@@ -68,7 +69,7 @@ public class ShopCartServlet extends HttpServlet {
         OrderDao orderDataStore = OrderDaoJdbc.getInstance();
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
         Map<Integer,Integer> orderLineItems;
-        Map<Product,Integer> shoppingItems = new HashMap<>();
+        Map<Product,Integer> shoppingItems = new TreeMap<>();
         HttpSession session = req.getSession();
         int sessionUserId;
 
