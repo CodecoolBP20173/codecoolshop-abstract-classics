@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -30,8 +31,11 @@ public class ShopCartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         OrderDao orderDataStore = OrderDaoJdbc.getInstance();
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
+        HttpSession session = req.getSession();
+        int sessionUserId = (Integer) session.getAttribute("userId");
+        int orderId = sessionUserId;
 
-        Order order = orderDataStore.find(1);
+        Order order = orderDataStore.find(orderId);
         Map<Integer,Integer> orderLineItems = order.getLineItems();
         Map<Product,Integer> shoppingItems = new HashMap<>();
 
@@ -46,7 +50,7 @@ public class ShopCartServlet extends HttpServlet {
         }
 
         String buttonValue = req.getParameter("addRemove");
-        removeAddCart(buttonValue);
+        removeAddCart(buttonValue, order);
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("shoppingItems", shoppingItems);
         resp.sendRedirect("/cart");
@@ -60,11 +64,14 @@ public class ShopCartServlet extends HttpServlet {
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
         Map<Integer,Integer> orderLineItems;
         Map<Product,Integer> shoppingItems = new HashMap<>();
+        HttpSession session = req.getSession();
+        int sessionUserId = (Integer) session.getAttribute("userId");
+        int orderId = sessionUserId;
 
-        if (orderDataStore.noOrderPlaced()) {
+        if (orderDataStore.noOrderPlacedForUser(sessionUserId)) {
             orderLineItems = new HashMap<>();
         } else {
-            Order order = orderDataStore.find(1);
+            Order order = orderDataStore.find(orderId);
             orderLineItems = order.getLineItems();
         }
 
@@ -88,10 +95,9 @@ public class ShopCartServlet extends HttpServlet {
 
     }
 
-    private void removeAddCart(String button) {
+    private void removeAddCart(String button, Order order) {
         OrderDao orderDataStore = OrderDaoJdbc.getInstance();
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
-        Order order = orderDataStore.find(1);
 
         Iterator<Map.Entry<Integer,Integer>> it = order.getLineItems().entrySet().iterator();
         while (it.hasNext()) {

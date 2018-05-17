@@ -35,8 +35,8 @@ public class OrderDaoJdbc implements OrderDao {
 
     @Override
     public void add(Order order) {
-        String ordersQuery = "INSERT INTO orders (name, description, email, phone, billing_address, shipping_address, payment_method)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?);";
+        String ordersQuery = "INSERT INTO orders (name, description, email, phone, billing_address, shipping_address, payment_method, id)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
         String orderProductsQuery = "INSERT INTO order_products (order_id, product_id, quantity) VALUES (?, ?, ?);";
 
@@ -51,6 +51,7 @@ public class OrderDaoJdbc implements OrderDao {
             ordersStatement.setString(5, order.getCustomerBillingAddress());
             ordersStatement.setString(6, order.getCustomerShippingAddress());
             ordersStatement.setString(7, order.getCustomerPaymentMethod());
+            ordersStatement.setInt(8, order.getId());
             ordersStatement.executeUpdate();
 
 
@@ -126,7 +127,6 @@ public class OrderDaoJdbc implements OrderDao {
     public void remove(int id) {
         String orderProductsQuery = "DELETE FROM order_products WHERE order_id = ?;";
         String ordersQuery = "DELETE FROM orders WHERE id = ?;";
-        String sequenceQuery = "ALTER SEQUENCE orders_id_seq RESTART WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE;";
 
         try {
             PreparedStatement orderProductsStatement = connection.prepareStatement(orderProductsQuery);
@@ -137,8 +137,6 @@ public class OrderDaoJdbc implements OrderDao {
             ordersStatement.setInt(1, id);
             ordersStatement.executeUpdate();
 
-            PreparedStatement sequenceStatement = connection.prepareStatement(sequenceQuery);
-            sequenceStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -190,34 +188,31 @@ public class OrderDaoJdbc implements OrderDao {
     }
 
     @Override
-    public int getNumberOfOrders() {
-        String query = "SELECT COUNT(id) AS orderCount FROM orders;";
+    public boolean noOrderPlacedForUser(int userId) {
+        String query = "SELECT COUNT(id) AS orderCount FROM orders WHERE id = ?;";
+        int orderId = userId;
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, orderId);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()){
-                return resultSet.getInt("orderCount");
+                return resultSet.getInt("orderCount") == 0;
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return 0;
-    }
-
-    @Override
-    public boolean noOrderPlaced() {
-        return getNumberOfOrders() == 0;
+        return true;
     }
 
     private Order setOrderObject(ResultSet resultSet) {
         try {
-            String orderName = "Order-" + (resultSet.getInt("id"));
-            Order order = new Order(orderName);
-            order.setId(resultSet.getInt("id"));
+            int orderId = resultSet.getInt("id");
+            String orderName = "Order-" + (orderId);
+            Order order = new Order(orderName, orderId);
             order.setDescription(resultSet.getString("description"));
             order.setCustomerName(resultSet.getString("name"));
             order.setCustomerEmail(resultSet.getString("email"));

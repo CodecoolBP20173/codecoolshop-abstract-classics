@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,12 +29,16 @@ public class PaymentServlet extends HttpServlet {
         ProductDao productDataStore = ProductDaoJdbc.getInstance();
         Map<Integer,Integer> orderLineItems;
         Map<Product,Integer> shoppingItems = new HashMap<>();
+        HttpSession session = req.getSession();
+        int sessionUserId = (Integer) session.getAttribute("userId");
+        int orderId = sessionUserId;
 
-        if (orderDataStore.noOrderPlaced()) {
+
+        if (orderDataStore.noOrderPlacedForUser(sessionUserId)) {
             resp.sendRedirect("/");
 
         } else {
-            Order order = orderDataStore.find(1);
+            Order order = orderDataStore.find(orderId);
             orderLineItems = order.getLineItems();
 
             int subTotal = 0;
@@ -60,7 +65,10 @@ public class PaymentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         OrderDao orderDataStore = OrderDaoJdbc.getInstance();
-        orderDataStore.remove(1);
+        HttpSession session = req.getSession();
+        int sessionUserId = (Integer) session.getAttribute("userId");
+        int orderId = sessionUserId;
+        orderDataStore.remove(orderId);
 
         resp.sendRedirect("/");
     }
