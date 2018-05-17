@@ -44,7 +44,6 @@ public class ProductController extends HttpServlet {
 
         int orderId = sessionUserId;
 
-
         int itemsInCart;
         Map<Integer,Integer> lineItems;
         Map<Product,Integer> popoverItems = new HashMap<>();

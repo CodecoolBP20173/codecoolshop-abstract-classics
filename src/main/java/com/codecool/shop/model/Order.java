@@ -7,7 +7,6 @@ public class Order extends BaseModel {
     private List<Integer> itemList = new ArrayList<>();
     private Map<Integer,Integer> lineItems = new HashMap<>();
     private Map<String, String> customerData;
-    private int id;
 
     public Order(String name, int id) {
         super(name);
@@ -15,7 +14,7 @@ public class Order extends BaseModel {
         this.itemList = new ArrayList<>();
         this.lineItems = new HashMap<>();
         this.customerData = new HashMap<>();
-        this.id = id;
+        super.id = id;
         customerData.put("name", "");
         customerData.put("email", "");
         customerData.put("phone", "");
