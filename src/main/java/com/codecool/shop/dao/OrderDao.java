@@ -11,7 +11,6 @@ public interface OrderDao {
     void remove(int id);
 
     List<Order> getAll();
-    int getNumberOfOrders();
 
-    boolean noOrderPlaced();
+    boolean noOrderPlacedForUser(int userId);
 }

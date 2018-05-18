@@ -43,12 +43,13 @@ public class OrderDaoMem implements OrderDao {
     }
 
     @Override
-    public int getNumberOfOrders() {
-        return orders.size();
-    }
-
-    @Override
-    public boolean noOrderPlaced() {
-        return orders.size() == 0;
+    public boolean noOrderPlacedForUser(int userId) {
+        int numberOfOrders = 0;
+        for (Order order: orders) {
+            if (order.getId() == userId) {
+                numberOfOrders++;
+            }
+        }
+        return numberOfOrders == 0;
     }
 }

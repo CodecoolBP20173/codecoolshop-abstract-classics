@@ -78,7 +78,8 @@
 .cartlink
 {
     text-decoration: none;
-    color: inherit;
+    color: black;
+
 }
 .cartlink:hover
 {
@@ -87,13 +88,61 @@
 
 /*for prettify look*/
 body {
-    background: #eae3d5;
-    background: linear-gradient(to top, #78767a 5%,  #eae3d5 70%);
 
-    height: 100%;
+}
+
+.parallax {
+    perspective: 1.01px;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.parallax__layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.parallax__layer--base {
+    transform: translateZ(0);
+    top: 1500px;
+    height: 200%;
+    z-index: 1;
+    margin-bottom: 1500px;
+}
+.parallax__layer--back {
+    top: 1800px;
+    transform: translateZ(-1px) scale(2);
+    background-image: url("../img/doodles/wood.jpg");
+    height: 1200px;
     margin: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-repeat: repeat;
+    opacity: 1;
+    z-index: 0;
+}
+/*.parallax__layer--back_second {
+    top: 1500px;
+    transform: translateZ(-1px) scale(2);
+    background-image: url("../img/doodles/wood.jpg");
+    height: 300px;
+    margin: 0;
+    background-repeat: repeat;
+    color: #9ea300;
+    opacity: 1;
+    z-index: 0;
+}*/
+
+.parallax__layer--deep {
+    transform: translateZ(-2px) scale(3);
+    z-index: -50;
+    text-align: center;
+}
+
+.parallax__layer--deepest {
+    transform: translateZ(-3px) scale(4);
+    z-index: -100;
+    height: 105%;
 }
 
 /* actual dropdown animation */
@@ -134,21 +183,61 @@ body {
     width: 200px;
 }
 
+#login{
+    position: fixed !important;
+    top: 40px;
+    left: 40px;
+    z-index: 10000;
+}
+
+#logout{
+    position: fixed !important;
+    top: 40px;
+    left: 40px;
+    z-index: 10000;
+
+
+}
+
 #showAllButton {
     width: 200px;
 }
 
 #products {
+    border-top: 4px solid rgba(120, 118, 122, 0.74);
     border-left: 4px solid rgba(120, 118, 122, 0.74);
     border-right: 4px solid rgba(120, 118, 122, 0.74);
     border-bottom: 4px solid rgba(120, 118, 122, 0.74);
+    background-color: rgba(255, 255, 255, 0.5);
 
 }
 
 .handWritted {
     /*font-family: 'Tangerine', serif;*/
+    font-size: 100px !important;
+    position: absolute;
+    top: 330px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 400px;
+    height: auto;
     font-family: 'Berkshire Swash', cursive;
-    font-size: 70px;
+    text-shadow: 4px 4px 4px #aaa;
+}
+.handWrittedBottom {
+    /*font-family: 'Tangerine', serif;*/
+    font-size: 100px !important;
+    position: absolute;
+    top: 1330px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 400px;
+    height: auto;
+    font-family: 'Berkshire Swash', cursive;
     text-shadow: 4px 4px 4px #aaa;
 }
 
@@ -162,16 +251,31 @@ body {
 }
 
 .lines {
-    background-color: #5e594d;
-    background-image: url("https://www.transparenttextures.com/patterns/brushed-alum.png");
+    background-color: #a0a29b;
+    background-image: url("../img/doodles/brick-wall-dark.png");
+    opacity: 1;
+    height: 200%;
 }
 
 #logo {
     position: absolute;
-    left: 50px;
-    top: 20px;
-    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 800px;
     height: auto;
+}
+
+#logoBottom {
+    position: relative;
+    top: 1400px;
+
+    width: 800px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 .group.list-group-image {
@@ -184,3 +288,103 @@ body {
     border: none;
     text-align: center;
 }
+
+#myPopover {
+    color: white;
+    position: fixed;
+    z-index: 4;
+    right: 80px;
+    top: 60px;
+
+}
+
+
+.popover {
+    position: fixed;
+}
+
+
+
+
+
+.d-inline-block.animated {
+    -webkit-animation-name: rubberBand;
+    animation-name: rubberBand;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+@-webkit-keyframes rubberBand {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+        transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+        transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+        transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+        -webkit-transform: scale3d(.95, 1.05, 1);
+        transform: scale3d(.95, 1.05, 1);
+    }
+    75% {
+        -webkit-transform: scale3d(1.05, .95, 1);
+        transform: scale3d(1.05, .95, 1);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+@keyframes rubberBand {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+        transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+        transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+        transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+        -webkit-transform: scale3d(.95, 1.05, 1);
+        transform: scale3d(.95, 1.05, 1);
+    }
+    75% {
+        -webkit-transform: scale3d(1.05, .95, 1);
+        transform: scale3d(1.05, .95, 1);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+#window {
+    top: 0px;
+    width: 1920px;
+    height: 1080px;
+    position: fixed;
+    z-index: 100;
+    pointer-events: none;
+}
+
+
+
+

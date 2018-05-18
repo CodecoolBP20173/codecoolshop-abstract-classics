@@ -2,7 +2,7 @@ package com.codecool.shop.model;
 
 import java.util.Currency;
 
-public class Product extends BaseModel {
+public class Product extends BaseModel implements Comparable<Product>{
 
     private float defaultPrice;
     private Currency defaultCurrency;
@@ -10,11 +10,15 @@ public class Product extends BaseModel {
     private Supplier supplier;
 
 
-    public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
+    private String imgUrl;
+
+
+    public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier, String imgUrl) {
         super(name, description);
         this.setPrice(defaultPrice, currencyString);
         this.setSupplier(supplier);
         this.setProductCategory(productCategory);
+        this.imgUrl = imgUrl;
     }
 
     public float getDefaultPrice() {
@@ -60,6 +64,10 @@ public class Product extends BaseModel {
         this.supplier.addProduct(this);
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
     @Override
     public String toString() {
         return String.format("id: %1$d, " +
@@ -74,5 +82,10 @@ public class Product extends BaseModel {
                 this.defaultCurrency.toString(),
                 this.productCategory.getName(),
                 this.supplier.getName());
+    }
+
+    @Override
+    public int compareTo(Product product) {
+        return Integer.valueOf(this.getId()).compareTo(product.getId());
     }
 }
