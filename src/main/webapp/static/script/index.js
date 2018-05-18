@@ -4,6 +4,18 @@ $( document ).ready(function() {
     var popupActivator = document.getElementById("popoverData").dataset.name;
     var myPopover = document.getElementById("myPopover");
     var cards =  document.getElementsByClassName('group list-group-image');
+    var loginButton = document.getElementById('login');
+    var logoutButton = document.getElementById('logout');
+
+
+
+    loginButton.addEventListener('click', function () {
+        document.cookie="indexScrollPosition=" + $(".parallax").scrollTop();
+    });
+
+    logoutButton.addEventListener('click', function () {
+        document.cookie="indexScrollPosition=" + $(".parallax").scrollTop();
+    });
 
     myPopover.addEventListener('mouseenter', function () {
         $(this).popover({
@@ -24,6 +36,8 @@ $( document ).ready(function() {
         $("#myPopover").popover('hide');
         console.log('hide')
     });
+
+
 
     if (popupActivator === 'active') {
         $("#myPopover").popover({
